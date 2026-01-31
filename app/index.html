@@ -58,19 +58,26 @@
         <div id="donationModal" class="modal-overlay" style="display: none;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>☕ Buy me a Kopi-O</h3>
+                    <h3>🍍 Huat Ah! You Won?</h3>
                     <button onclick="App.toggleDonationModal()" class="btn-close">×</button>
                 </div>
                 <div class="modal-body" style="text-align: center;">
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
-                        If you hit the jackpot (or just like the app), you can support the server costs via PayNow!
+                    <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">
+                        Share the good luck! 🧧
                     </p>
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        Running this prediction engine costs money. If our AI helped you strike 4D or Toto, consider buying me a coffee (or a beer) to keep the servers running!
+                    </p>
+                    
                     <div class="paynow-box">
-                        <span style="font-size: 0.875rem; color: var(--text-muted);">PayNow to Mobile</span>
-                        <div class="paynow-number" onclick="navigator.clipboard.writeText('96788675'); alert('Number copied!')" title="Click to Copy">
-                            9678 8675
+                        <img src="assets/paynow-qr.png" alt="PayNow QR" class="paynow-qr">
+                        <div class="paynow-details">
+                            <span style="font-size: 0.875rem; color: var(--text-muted);">PayNow to Mobile</span>
+                            <div class="paynow-number" onclick="navigator.clipboard.writeText('96788675'); alert('Number copied!')" title="Click to Copy">
+                                9678 8675
+                            </div>
+                            <span style="font-size: 0.75rem; color: var(--accent-cyan);">Click number to copy</span>
                         </div>
-                        <span style="font-size: 0.75rem; color: var(--accent-cyan);">Click number to copy</span>
                     </div>
                 </div>
             </div>

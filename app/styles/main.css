@@ -1083,13 +1083,31 @@ body::before {
 }
 
 .paynow-box {
-  background: rgba(255, 255, 255, 0.05);
+  background: white;
   padding: var(--space-lg);
   border-radius: var(--radius-md);
   border: 1px dashed rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.paynow-qr {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--accent-magenta);
+}
+
+.paynow-details {
+  display: flex;
+  flex-direction: column;
   gap: var(--space-xs);
+  background: var(--bg-tertiary);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
 }
 
 .paynow-number {
