@@ -6,24 +6,24 @@ const TRANSLATIONS = {
         "nav.analysis": "Analysis",
         "nav.history": "History",
         "nav.settings": "Settings",
-        "nav.donate": "Donate",
+        "nav.donate": "Treat Kopi ☕",
 
         // Hero
-        "hero.title": "Predict Your <span class='hero__title-gradient'>Lucky Numbers</span>",
-        "hero.subtitle": "Computer analyze 3 years of 4D & Toto data. Mixed with math patterns and a bit of 'Heng Ong Huat'!",
-        "hero.disclaimer": "⚠️ FOR FUN ONLY — Don't bet your house/CPF!",
+        "hero.title": "Predict Your <span class='hero__title-gradient'>Huat Numbers</span>",
+        "hero.subtitle": "Computer whack 3 years of 4D & Toto data. Plus math pattern and some 'Heng Ong Huat'!",
+        "hero.disclaimer": "⚠️ PLAY PLAY ONLY — Don't bet your house/CPF ah!",
 
         // Status
-        "status.loading": "Wait ah, loading...",
+        "status.loading": "Relax first, loading...",
         "status.error": "Alamak, error loading data",
-        "status.success": "Sweaty! Loaded {toto} Toto + {fourd} 4D draws",
-        "status.notLoaded": "No data lei. Click 'Load Data' to start.",
+        "status.success": "Swee la! Loaded {toto} Toto + {fourd} 4D draws",
+        "status.notLoaded": "Bo data lei. Click 'Load Data' first.",
         "status.action": "Load Data",
 
         // Stats
         "stats.4dDraws": "4D Draws",
         "stats.totoDraws": "Toto Draws",
-        "stats.hotToto": "Hottest Toto #",
+        "stats.hotToto": "Shiok Toto #",
         "stats.overdue": "Si Beh Overdue",
         
         // Game Tabs
@@ -31,34 +31,34 @@ const TRANSLATIONS = {
         "game.4d": "4D",
 
         // Dashboard
-        "card.generator": "Number Generator",
-        "strategy.weighted": "Weighted",
-        "strategy.hot": "Hot Numbers",
-        "strategy.cold": "Cold Numbers",
-        "strategy.overdue": "Overdue",
-        "strategy.balanced": "Balanced",
+        "card.generator": "Huat Number Generator",
+        "strategy.weighted": "Sure Win? (Weighted)",
+        "strategy.hot": "Shiok Numbers (Hot)",
+        "strategy.cold": "Ulu Numbers (Cold)",
+        "strategy.overdue": "Long Time No See",
+        "strategy.balanced": "Rojak Mix",
         "strategy.random": "Anyhow Hantam",
-        "strategy.ai": "🤖 Smart Computer (AI)",
+        "strategy.ai": "🤖 Super Computer (AI)",
         
-        "btn.generate": "🎯 Huat Ah!",
-        "generator.explanation": "Select a pattern and generate your winning numbers",
+        "btn.generate": "🎯 Huat Ah! Generate",
+        "generator.explanation": "Choose your fighter (strategy) and see your luck",
         
-        "details.title": "📖 How It Works (Simpler Term)",
-        "details.weighted": "Mix of everything. Hot numbers + overdue numbers. The 'standard' logical choice.",
-        "details.hot": "Numbers that always appear. The 'popular kids'.",
-        "details.cold": "Numbers that rarely appear. Betting they will suddeny wake up.",
-        "details.overdue": "Numbers that vanished for very long. 'Missing in action'.",
-        "details.balanced": "Rojak mix: 2 hot + 2 overdue + 2 random. Covers all bases.",
-        "details.random": "Anyhow pick one. Pure luck. Same chance as buying QuickPick.",
-        "details.ai": "Like a super calculator. It studies the last 50 draws very hard to find secret patterns you cannot see. Good for those who want technology to help them think.",
+        "details.title": "📖 Simpler English Explanation",
+        "details.weighted": "Mix everything. Hot numbers + overdue numbers. The 'standard' logical choice.",
+        "details.hot": "Numbers that always come out. The 'popular kids' in school.",
+        "details.cold": "Numbers that hide in corner. Betting they suddenly wake up.",
+        "details.overdue": "Numbers that MIA (Missing In Action) for very long.",
+        "details.balanced": "Rojak style: 2 hot + 2 overdue + 2 random. Kiasu a bit, cover all bases.",
+        "details.random": "Anyhow press. Pure luck. Same chance as buying QuickPick at counter.",
+        "details.ai": "Like a super genius calculator. It studies the last 50 draws very hard to find secret patterns you cannot see. Trust the machine!",
 
         // Analysis
         "card.heatmap": "Frequency Heatmap",
-        "heatmap.cold": "❄️ Cold",
+        "heatmap.cold": "❄️ Cold like Genting",
         "heatmap.normal": "⚪ Normal",
-        "heatmap.hot": "🔥 Hot",
+        "heatmap.hot": "🔥 Hot like Sun",
         "card.overdue": "Long Time No See (Overdue)",
-        "overdue.empty": "Click 'Load Data' first...",
+        "overdue.empty": "Click 'Load Data' first hor...",
         "card.distribution": "Number Frequency",
 
         // History
@@ -71,12 +71,12 @@ const TRANSLATIONS = {
         "pagination.page": "Page",
 
         // Footer
-        "footer.disclaimer": "Mainly for fun/shiok only. Gambling implies risk. Please play responsibly.",
+        "footer.disclaimer": "Mainly for fun/shiok only. Gambling is risky. Don't scold me if lose.",
 
         // Donation Modal
         "modal.title": "🍍 Huat Ah! You Won?",
         "modal.subtitle": "Don't forget to share the Ong! 🧧",
-        "modal.text": "Server electricity very expensive! If this bot helped you 'tiok' (strike) 4D or Toto, belanja (treat) me a Kopi or Beer to keep it alive!",
+        "modal.text": "Server electricity bill killing me! If you tiok (strike) 4D or Toto, belanja (treat) me a Kopi or Beer lei!",
         "paynow.label": "PayNow to Mobile",
         "paynow.copy": "Tap number to copy",
         "paynow.alert": "Copied! Swee!"
@@ -84,28 +84,28 @@ const TRANSLATIONS = {
     zh: {
         // Nav
         "nav.dashboard": "主页",
-        "nav.analysis": "数据分析",
-        "nav.history": "历史记录",
+        "nav.analysis": "看路",
+        "nav.history": "历史",
         "nav.settings": "设置",
-        "nav.donate": "捐赠",
+        "nav.donate": "请喝咖啡 ☕",
 
         // Hero
         "hero.title": "预测您的 <span class='hero__title-gradient'>发财号码</span>",
-        "hero.subtitle": "电脑分析3年的万字票和多多数据。结合数理逻辑和一点点'Heng Ong Huat'！",
-        "hero.disclaimer": "⚠️ 仅供娱乐 — 小赌怡情，大赌伤身",
+        "hero.subtitle": "电脑分析3年的万字票和多多数据。加上一点点 'Heng Ong Huat'！",
+        "hero.disclaimer": "⚠️ 玩玩就好 — 这里的建议仅供参考，输了别找我！",
 
         // Status
-        "status.loading": "正在加载... 等一下...",
-        "status.error": "哎哟，加载出错了",
-        "status.success": "搞定！加载了 {toto} 期多多 + {fourd} 期万字票",
-        "status.notLoaded": "没数据咧。点一下 '加载数据'。",
-        "status.action": "加载数据",
+        "status.loading": "等一下，正在算...",
+        "status.error": "阿拉玛 (Alamak)，出错了",
+        "status.success": "美啦 (Swee)！加载了 {toto} 期多多 + {fourd} 期万字票",
+        "status.notLoaded": "没有数据咧。点一下 'Load Data'。",
+        "status.action": "Load Data",
 
         // Stats
         "stats.4dDraws": "万字票期数",
         "stats.totoDraws": "多多期数",
         "stats.hotToto": "最旺多多号码",
-        "stats.overdue": "最久没来",
+        "stats.overdue": "最久没来 (MIA)",
         
         // Game Tabs
         "game.toto": "多多 (Toto)",
@@ -113,31 +113,31 @@ const TRANSLATIONS = {
 
         // Dashboard
         "card.generator": "发财号码生成器",
-        "strategy.weighted": "综合分析",
-        "strategy.hot": "热门号码",
-        "strategy.cold": "冷门号码",
-        "strategy.overdue": "遗漏号码",
+        "strategy.weighted": "综合分析 (稳)",
+        "strategy.hot": "旺到爆 (Hot)",
+        "strategy.cold": "冷门 (Cold)",
+        "strategy.overdue": "很久没来 (Overdue)",
         "strategy.balanced": "罗惹 (Rojak) 组合",
-        "strategy.random": "随便乱选",
-        "strategy.ai": "🤖 智能电脑 (AI)",
+        "strategy.random": "乱乱选 (Anyhow)",
+        "strategy.ai": "🤖 电脑神算 (AI)",
         
-        "btn.generate": "🎯 发啊 (Huat)",
-        "generator.explanation": "选一个策略，看看你的运势",
+        "btn.generate": "🎯 发阿 (Huat Ah)!",
+        "generator.explanation": "选一个方法，看看你的财运",
         
-        "details.title": "📖 简单说明",
-        "details.weighted": "什么都有一点。热门+遗漏，最‘标准’的选法。",
-        "details.hot": "经常开的号码。就是那些‘红人’。",
-        "details.cold": "平时不出现的号码。赌它们突然‘醒’过来。",
-        "details.overdue": "失踪最久的号码。",
-        "details.balanced": "Rojak 混合：2个热门 + 2个遗漏 + 2个随机。大包围。",
-        "details.random": "乱乱选。纯碰运气，跟买 QuickPick 一样。",
-        "details.ai": "像个超级计算器。它帮你死命研究过去50期，找出你看不见的规律。不想动脑就用这个！",
+        "details.title": "📖 简单解释",
+        "details.weighted": "什么都参一点。热门+遗漏，最‘保守’的选法。",
+        "details.hot": "经常开的号码。红到发紫。",
+        "details.cold": "平时不出现的号码。博它们突然‘爆冷’。",
+        "details.overdue": "失踪最久的号码。MIA 很久了。",
+        "details.balanced": "Rojak 混合：2个热门 + 2个遗漏 + 2个随机。大包围，怕死输 (Kiasu)。",
+        "details.random": "乱乱选。纯碰运气，跟去投注站买 QuickPick 一样。",
+        "details.ai": "像个超级电脑大师。它帮你死命研究过去50期，找出你看不见的‘路’。相信科技！",
 
         // Analysis
-        "card.heatmap": "频率热力图",
-        "heatmap.cold": "❄️ 冷",
-        "heatmap.normal": "⚪ 一般",
-        "heatmap.hot": "🔥 旺",
+        "card.heatmap": "路珠热力图",
+        "heatmap.cold": "❄️ 冷 (Genting)",
+        "heatmap.normal": "⚪ 普通",
+        "heatmap.hot": "🔥 旺 (Hot)",
         "card.overdue": "失踪号码列表",
         "overdue.empty": "先加载数据...",
         "card.distribution": "号码频率",
@@ -152,73 +152,73 @@ const TRANSLATIONS = {
         "pagination.page": "页",
 
         // Footer
-        "footer.disclaimer": "本工具纯属娱乐。主要为了爽。请理性投注。",
+        "footer.disclaimer": "本工具纯属娱乐。小赌怡情，大赌伤身。输了不要骂我。",
 
         // Donation Modal
         "modal.title": "🍍 发啊! 中奖了吗?",
-        "modal.subtitle": "好运要分享! 🧧",
-        "modal.text": "服务器也是要吃电的！如果帮你中了奖，请我喝杯 Kopi 或啤酒，让网站继续跑！",
+        "modal.subtitle": "好运要分享! (Ong) 🧧",
+        "modal.text": "服务器电费很贵咧！如果帮你中了奖，请我喝杯 Kopi 或啤酒，让网站继续跑！",
         "paynow.label": "PayNow 手机号",
         "paynow.copy": "点击号码复制",
         "paynow.alert": "复制了！Swee！"
     },
     ms: {
         // Nav
-        "nav.dashboard": "Utama",
+        "nav.dashboard": "Home",
         "nav.analysis": "Analisis",
         "nav.history": "Sejarah",
         "nav.settings": "Tetapan",
-        "nav.donate": "Belanja Kopi",
+        "nav.donate": "Belanja Kopi ☕",
 
         // Hero
-        "hero.title": "Ramal Nombor <span class='hero__title-gradient'>Bertuah Anda</span>",
+        "hero.title": "Ramal Nombor <span class='hero__title-gradient'>Huat Anda</span>",
         "hero.subtitle": "Komputer analisis 3 tahun data. Campur matematik dan sikit nasib 'Huat'!",
-        "hero.disclaimer": "⚠️ HANYA UNTUK SUKA-SUKA — Jangan gadai tanah!",
+        "hero.disclaimer": "⚠️ MAIN-MAIN SAJA — Jangan gadai rumah!",
 
         // Status
-        "status.loading": "Tunggu kejap...",
+        "status.loading": "Sabar jap, loading...",
         "status.error": "Alamak, error pulak",
-        "status.success": "Cun! {toto} Toto + {fourd} 4D dimuatkan",
+        "status.success": "Cantik! {toto} Toto + {fourd} 4D dimuatkan",
         "status.notLoaded": "Tak ada data. Tekan 'Muat Data' dulu.",
         "status.action": "Muat Data",
 
         // Stats
         "stats.4dDraws": "Cabutan 4D",
         "stats.totoDraws": "Cabutan Toto",
-        "stats.hotToto": "No. Paling Panas",
-        "stats.overdue": "Paling Lama Hilang",
+        "stats.hotToto": "No. Paling Power",
+        "stats.overdue": "Paling Lama MIA",
         
         // Game Tabs
         "game.toto": "TOTO",
         "game.4d": "4D",
 
         // Dashboard
-        "card.generator": "Mesin Nombor",
-        "strategy.weighted": "Campur-campur",
-        "strategy.hot": "Nombor Panas",
-        "strategy.cold": "Nombor Sejuk",
-        "strategy.overdue": "Lama Hilang",
-        "strategy.balanced": "Rojak",
+        "card.generator": "Mesin Nombor Huat",
+        "strategy.weighted": "Campur (Weighted)",
+        "strategy.hot": "Nombor Panas (Hot)",
+        "strategy.cold": "Nombor Sejuk (Cold)",
+        "strategy.overdue": "Lama Hilang (MIA)",
+        "strategy.balanced": "Rojak Mix",
         "strategy.random": "Hantam Saja",
-        "strategy.ai": "🤖 Komputer Pintar (AI)",
+        "strategy.ai": "🤖 Komputer Power (AI)",
         
-        "btn.generate": "🎯 Huat Ah!",
+        "btn.generate": "🎯 Huat Ah! Jalan",
         "generator.explanation": "Pilih strategi, tengok ong anda",
         
-        "details.title": "📖 Penjelasan Mudah",
-        "details.weighted": "Campuran frekuensi. Cuba nasib guna logik.",
-        "details.hot": "Nombor yang selalu keluar.",
-        "details.cold": "Nombor yang jarang keluar.",
-        "details.overdue": "Nombor yang dah lama tak nampak.",
-        "details.balanced": "Rojak: sikit panas, sikit sejuk, sikit random.",
+        "details.title": "📖 Penjelasan Simple",
+        "details.weighted": "Campuran frekuensi. Cuba nasib guna logik sikit.",
+        "details.hot": "Nombor yang selalu keluar. Macam artis popular.",
+        "details.cold": "Nombor yang jarang keluar. Betting dia tiba-tiba muncul.",
+        "details.overdue": "Nombor yang dah lama tak nampak (MIA).",
+        "details.balanced": "Rojak: sikit panas, sikit sejuk, sikit random. Cover semua.",
         "details.random": "Main tikam saja. Macam QuickPick.",
         "details.ai": "Komputer ni tolong kaji 50 result lepas. Dia cari pattern yang mata kita tak nampak. Biar mesin buat kerja!",
 
         // Analysis
         "card.heatmap": "Peta Haba",
-        "heatmap.cold": "❄️ Sejuk",
+        "heatmap.cold": "❄️ Sejuk (Genting)",
         "heatmap.normal": "⚪ Biasa",
-        "heatmap.hot": "🔥 Panas",
+        "heatmap.hot": "🔥 Panas (Hot)",
         "card.overdue": "Nombor Lama Hilang",
         "overdue.empty": "Muat data dulu...",
         "card.distribution": "Taburan Nombor",
@@ -233,12 +233,12 @@ const TRANSLATIONS = {
         "pagination.page": "Muka",
 
         // Footer
-        "footer.disclaimer": "Untuk hiburan saja. Jangan main gila-gila.",
+        "footer.disclaimer": "Untuk hiburan saja. Jangan main gila-gila. Kalau kalah jangan marah.",
 
         // Donation Modal
         "modal.title": "🍍 Huat Ah! Ada Kena?",
         "modal.subtitle": "Share sikit ong tu! 🧧",
-        "modal.text": "Nak run server ni kena bayar bil letrik! Kalau apps ni tolong awak kena nombor, belanja la saya Kopi O satu!",
+        "modal.text": "Nak run server ni kena bayar bil letrik mahal! Kalau apps ni tolong awak kena nombor, belanja la saya Kopi O satu!",
         "paynow.label": "PayNow ke Mobile",
         "paynow.copy": "Tekan nombor untuk copy",
         "paynow.alert": "Dah copy! Cantik!"
