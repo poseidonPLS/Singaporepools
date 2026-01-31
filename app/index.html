@@ -62,7 +62,106 @@
             </div>
         </header>
 
-                <!-- Strategy Explanation Panel -->
+
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Hero (always visible) -->
+                <section class="hero">
+                    <h1 class="hero__title" data-i18n="hero.title">
+                        Predict Your <span class="hero__title-gradient">Lucky Numbers</span>
+                    </h1>
+                    <p class="hero__subtitle" data-i18n="hero.subtitle">
+                        Statistical analysis of 3 years of Singapore Pools 4D & Toto data. 
+                        Powered by probability, pattern recognition, and a touch of luck.
+                    </p>
+                    <span class="hero__disclaimer" data-i18n="hero.disclaimer">
+                        ⚠️ FOR ENTERTAINMENT ONLY — Lottery outcomes are random
+                    </span>
+                </section>
+
+                <!-- Data Status (always visible) -->
+                <div class="scrape-status" id="scrapeStatus">
+                    <div class="scrape-status__indicator scrape-status__indicator--warning"></div>
+                    <span class="scrape-status__text" data-i18n="status.notLoaded">Data not loaded. Run scrapers to populate database.</span>
+                    <button class="scrape-status__action" onclick="loadData()" data-i18n="status.action">Load Data</button>
+                </div>
+
+                <!-- Stats Overview (always visible) -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-card__label" data-i18n="stats.4dDraws">4D Draws</span>
+                        <div class="stat-card__value" id="stat4dDraws">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card__label" data-i18n="stats.totoDraws">Toto Draws</span>
+                        <div class="stat-card__value" id="statTotoDraws">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card__label" data-i18n="stats.hotToto">Hottest Toto #</span>
+                        <div class="stat-card__value" id="statHotNumber">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-card__label" data-i18n="stats.overdue">Most Overdue</span>
+                        <div class="stat-card__value" id="statOverdue">-</div>
+                    </div>
+                </div>
+
+                <!-- Game Selector (always visible) -->
+                <div class="game-tabs">
+                    <button class="game-tab game-tab--active" onclick="switchGame('toto')" data-game="toto" data-i18n="game.toto">
+                        <span class="game-tab__icon">🎱</span> TOTO
+                    </button>
+                    <button class="game-tab" onclick="switchGame('4d')" data-game="4d" data-i18n="game.4d">
+                        <span class="game-tab__icon">🎰</span> 4D
+                    </button>
+                </div>
+
+                <!-- VIEWS -->
+                
+                <!-- 1. DASHBOARD VIEW -->
+                <div id="view-dashboard" class="view-content active">
+                    <div class="dashboard">
+                        <!-- Prediction Panel -->
+                        <div class="card card--span-12">
+                            <div class="card__header">
+                                <h2 class="card__title" data-i18n="card.generator">
+                                    <span class="card__icon">✨</span>
+                                    Number Generator
+                                </h2>
+                                <span class="card__badge" id="gameTypeLabel">TOTO</span>
+                            </div>
+                            <div class="card__body">
+                                <div class="strategy-select" id="strategySelect">
+                                    <button class="strategy-btn strategy-btn--active" data-strategy="weighted" data-i18n="strategy.weighted">Weighted</button>
+                                    <button class="strategy-btn" data-strategy="hot" data-i18n="strategy.hot">Hot Numbers</button>
+                                    <button class="strategy-btn" data-strategy="cold" data-i18n="strategy.cold">Cold Numbers</button>
+                                    <button class="strategy-btn" data-strategy="overdue" data-i18n="strategy.overdue">Overdue</button>
+                                    <button class="strategy-btn" data-strategy="balanced" data-i18n="strategy.balanced">Balanced</button>
+                                    <button class="strategy-btn" data-strategy="random" data-i18n="strategy.random">Random</button>
+                                    <button class="strategy-btn strategy-btn--ai" data-strategy="ai" onclick="generateAINumbers()" title="Powered by Gemini AI" data-i18n="strategy.ai">🤖 AI Prediction</button>
+                                </div>
+                                
+                                <div class="lottery-balls mb-xl" id="predictedNumbers">
+                                    <div class="lottery-ball">?</div>
+                                    <div class="lottery-ball">?</div>
+                                    <div class="lottery-ball">?</div>
+                                    <div class="lottery-ball">?</div>
+                                    <div class="lottery-ball">?</div>
+                                    <div class="lottery-ball">?</div>
+                                    <div class="lottery-ball lottery-ball--additional" id="additionalBall" style="display:none;">+</div>
+                                </div>
+                                
+                                <button class="generate-btn" onclick="generateNumbers()">
+                                    🎯 Generate Numbers
+                                </button>
+                                
+                                <p class="mt-lg" style="text-align: center; color: var(--text-muted); font-size: 0.875rem;" id="strategyExplanation">
+                                    Select a strategy and generate your lucky numbers
+                                </p>
+                                
+                                <!-- Strategy Explanation Panel -->
                                 <details class="strategy-details mt-lg">
                                     <summary class="strategy-details__toggle" data-i18n="details.title">
                                         📖 How Each Strategy Works
