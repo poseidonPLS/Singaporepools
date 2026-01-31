@@ -458,6 +458,8 @@ body::before {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 6px;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 /* Responsive heatmap grid */
@@ -474,6 +476,7 @@ body::before {
 
 .heatmap__cell {
   aspect-ratio: 1;
+  max-width: 60px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
