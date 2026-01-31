@@ -42,56 +42,43 @@ WAIT_TIMEOUT = 10
 DELAY_BETWEEN_DRAWS = 0.5  # Seconds between requests (be nice to the server)
 
 
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
 # =============================================================================
 # CORE FUNCTIONS
 # =============================================================================
 
-def setup_driver(headless: bool = True) -> webdriver.Chrome:
-    """
-    Set up Chrome WebDriver with appropriate options.
+def setup_driver(headless=True):
+    chrome_options = Options()
     
-    Args:
-        headless: Run browser without GUI
-        
-    Returns:
-        Configured Chrome WebDriver instance
-    """
-    options = Options()
     if headless:
-        options.add_argument("--headless=new")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("--disable-gpu")
-    options.add_argument("--remote-allow-origins=*")
-    options.add_argument("--remote-debugging-port=9222")
-    options.add_argument("--window-size=1920,1080")
-
-    # Standard User Agent for local
-    options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36")
+        chrome_options.add_argument("--headless=new")
     
-    # Linux/Snap compatibility (Server only)
-    if Path("/snap/bin/chromium").exists():
-        options.binary_location = "/snap/bin/chromium"
-        options.add_argument("--disable-software-rasterizer")
-        options.add_argument("--no-zygote")
-        options.add_argument("--single-process")
-        # Overwrite UA for server
-        options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    # Golden Configuration for Oracle Cloud / Linux
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+    chrome_options.add_argument("--window-size=1920,1080")
     
-    # Linux/Snap compatibility
-    if Path("/snap/bin/chromium").exists():
-        options.binary_location = "/snap/bin/chromium"
-    
+    # Try using system-installed chromedriver (common on Snaps) or fallback to manager
     service = None
     if Path("/snap/bin/chromium.chromedriver").exists():
         service = Service(executable_path="/snap/bin/chromium.chromedriver")
+        if Path("/snap/bin/chromium").exists():
+             chrome_options.binary_location = "/snap/bin/chromium"
     else:
+        # Fallback to webdriver_manager
         try:
             service = Service(ChromeDriverManager().install())
         except Exception:
-            pass # Fallback to default path
-            
-    driver = webdriver.Chrome(service=service, options=options)
+            pass 
+
+    if service:
+        driver = webdriver.Chrome(service=service, options=chrome_options)
+    else:
+        driver = webdriver.Chrome(options=chrome_options)
+        
     return driver
 
 
