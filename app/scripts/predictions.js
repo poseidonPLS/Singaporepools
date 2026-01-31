@@ -222,7 +222,7 @@ const Predictions = {
     // AI Prediction - fetch from backend
     async getAIPrediction() {
         try {
-            const response = await fetch('http://localhost:8080/api/ai-prediction');
+            const response = await fetch('/api/ai-prediction');
             const data = await response.json();
             return data;
         } catch (e) {
@@ -234,7 +234,7 @@ const Predictions = {
     // Generate new AI prediction (calls Gemini API)
     async generateAIPrediction() {
         try {
-            const response = await fetch('http://localhost:8080/api/ai-prediction/generate');
+            const response = await fetch('/api/ai-prediction/generate');
             const data = await response.json();
             return data;
         } catch (e) {
