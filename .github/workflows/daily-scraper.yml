@@ -2,8 +2,11 @@ name: Daily Scraper & AI Prediction
 
 on:
   schedule:
-    # Run at 10:45 PM Singapore Time (14:45 UTC) - after both draws are typically done
-    - cron: '45 14 * * *'
+    # 4D: Wed, Sat, Sun at 7:15 PM SGT (11:15 UTC)
+    - cron: '15 11 * * 0,3,6'
+    
+    # Toto: Mon, Thu at 10:15 PM SGT (14:15 UTC) - Safety buffer for late draws
+    - cron: '15 14 * * 1,4'
   workflow_dispatch:  # Allow manual trigger
 
 jobs:
