@@ -18,6 +18,14 @@ const App = {
     },
     analysis: {},
 
+    // Toggle Donation Modal
+    toggleDonationModal() {
+        const modal = document.getElementById('donationModal');
+        if (modal) {
+            modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
+        }
+    },
+
     // Initialize application
     async init() {
         console.log('🎲 Initializing SG Pools Predictor...');

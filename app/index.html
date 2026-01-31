@@ -4,6 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Singapore Pools 4D & Toto Prediction Dashboard - Statistical analysis and number generator for entertainment purposes only.">
+    <meta name="keywords" content="Singapore Pools, 4D, Toto, Prediction, Analysis, Statistics, Lottery, SG Pools">
+    <meta name="author" content="SG Pools Predictor">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://singaporepools.win/">
+    <meta property="og:title" content="SG Pools Predictor | 4D & Toto Analysis Dashboard">
+    <meta property="og:description" content="Statistical analysis of 3 years of Singapore Pools 4D & Toto data. Powered by probability, pattern recognition, and a touch of luck.">
+    <meta property="og:image" content="https://singaporepools.win/assets/og-image.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://singaporepools.win/">
+    <meta property="twitter:title" content="SG Pools Predictor | 4D & Toto Analysis Dashboard">
+    <meta property="twitter:description" content="Statistical analysis of 3 years of Singapore Pools 4D & Toto data. Powered by probability, pattern recognition, and a touch of luck.">
+    
     <title>SG Pools Predictor | 4D & Toto Analysis Dashboard</title>
     
     <!-- Fonts -->
@@ -31,9 +47,34 @@
                     <a href="#analysis" class="nav__link">Analysis</a>
                     <a href="#history" class="nav__link">History</a>
                     <a href="#settings" class="nav__link">Settings</a>
+                    <button onclick="App.toggleDonationModal()" class="nav__link nav__link--donate">
+                        <span>☕</span> Donate
+                    </button>
                 </nav>
             </div>
         </header>
+
+        <!-- Donation Modal -->
+        <div id="donationModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>☕ Buy me a Kopi-O</h3>
+                    <button onclick="App.toggleDonationModal()" class="btn-close">×</button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                        If you hit the jackpot (or just like the app), you can support the server costs via PayNow!
+                    </p>
+                    <div class="paynow-box">
+                        <span style="font-size: 0.875rem; color: var(--text-muted);">PayNow to Mobile</span>
+                        <div class="paynow-number" onclick="navigator.clipboard.writeText('96788675'); alert('Number copied!')" title="Click to Copy">
+                            9678 8675
+                        </div>
+                        <span style="font-size: 0.75rem; color: var(--accent-cyan);">Click number to copy</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Main Content -->
         <main class="main">
