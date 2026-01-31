@@ -62,10 +62,13 @@ def setup_driver(headless: bool = True) -> webdriver.Chrome:
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
+    options.add_argument("--disable-software-rasterizer")  # Critical for headless
+    options.add_argument("--no-zygote")  # Helps in containers
+    options.add_argument("--single-process")  # Stick to one process
     options.add_argument("--remote-allow-origins=*")
     options.add_argument("--remote-debugging-port=9222")
     options.add_argument("--window-size=1920,1080")
-    options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36")
+    options.add_argument("--user-agent=Mozilla/5.0 (X11; Linux aarch64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36") # Spoof typical Linux UA
     
     # Linux/Snap compatibility
     if Path("/snap/bin/chromium").exists():
