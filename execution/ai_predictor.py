@@ -290,12 +290,12 @@ def generate_prediction(game: str) -> dict:
     if "error" not in prediction:
         print(f"   ✅ Prediction generated!")
         if game == "toto":
-            print(f"   Numbers: {prediction.get('main_numbers', [])}")
-            print(f"   Additional: {prediction.get('additional_number')}")
+            for p in prediction.get("predictions", []):
+                print(f"   {p.get('confidence', 'unknown').upper()}: {p.get('main_numbers', [])} + {p.get('additional_number')}")
         else:
             for p in prediction.get("predictions", []):
-                print(f"   {p['type']}: {p['number']}")
-        print(f"   Confidence: {prediction.get('confidence', 'unknown')}")
+                print(f"   {p.get('confidence', 'unknown').upper()}: {p.get('number')}")
+                
     else:
         print(f"   ⚠ Error: {prediction.get('error')}")
     
