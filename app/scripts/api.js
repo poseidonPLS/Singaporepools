@@ -6,7 +6,7 @@
 
 const API = {
     // Configuration
-    baseUrl: 'http://localhost:8080',
+    baseUrl: '', // Relative path for production
     demoMode: false, // Will auto-switch to demo if backend unreachable
     
     // Check if backend is available
