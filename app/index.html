@@ -138,10 +138,13 @@
                 </div>
 
                 <!-- Game Selector -->
-                <div class="game-selector">
-                    <button class="game-btn active" onclick="App.setGame('toto')" data-i18n="game.toto">TOTO</button>
-                    <button class="game-btn" onclick="App.setGame('fourD')" data-i18n="game.4d">4D</button>
-                    <div class="game-selector__indicator"></div>
+                <div class="game-tabs">
+                    <button class="game-tab game-tab--active" onclick="switchGame('toto')" data-game="toto" data-i18n="game.toto">
+                        <span class="game-tab__icon">🎱</span> TOTO
+                    </button>
+                    <button class="game-tab" onclick="switchGame('4d')" data-game="4d" data-i18n="game.4d">
+                        <span class="game-tab__icon">🎰</span> 4D
+                    </button>
                 </div>
 
                 <!-- VIEWS -->
@@ -247,7 +250,7 @@
                                 </div>
                             </div>
                             <div class="card__body">
-                                <div class="heatmap-container" id="heatmap"></div>
+                                <div class="heatmap" id="heatmap"></div>
                             </div>
                         </div>
 
@@ -257,7 +260,7 @@
                                 <h2 class="card__title" data-i18n="card.overdue">Overdue Numbers</h2>
                             </div>
                             <div class="card__body">
-                                <div class="stat-list" id="overdueList">
+                                <div id="overdueList" style="font-family: var(--font-mono);">
                                     <div class="empty-state" data-i18n="overdue.empty">Load data to see overdue numbers</div>
                                 </div>
                             </div>
@@ -286,12 +289,12 @@
                                 <div class="badge" id="historyCount">0 draws</div>
                             </div>
                     <div class="table-container">
-                        <table class="data-table">
+                        <table class="history-table" id="historyTable">
                             <thead>
                                 <tr>
-                                    <th data-i18n="table.draw">Draw #</th>
+                                    <th data-i18n="table.draw">Draw</th>
                                     <th data-i18n="table.date">Date</th>
-                                    <th data-i18n="table.winning">Winning Numbers</th>
+                                    <th data-i18n="table.numbers">Winning Numbers</th>
                                     <th data-i18n="table.additional">Additional</th>
                                 </tr>
                             </thead>
