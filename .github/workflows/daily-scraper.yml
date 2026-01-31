@@ -1,0 +1,49 @@
+name: Daily Scraper & AI Prediction
+
+on:
+  schedule:
+    # Run at 10:45 PM Singapore Time (14:45 UTC) - after both draws are typically done
+    - cron: '45 14 * * *'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  scrape-and-predict:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium webdriver-manager beautifulsoup4 google-generativeai python-dotenv
+
+    - name: Run Scrapers (Headless)
+      run: |
+        # Run 4D Scraper
+        python execution/scrape_4d.py --limit 5
+        
+        # Run Toto Scraper
+        python execution/scrape_toto.py --limit 5
+
+    - name: Run AI Predictor
+      env:
+        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+      run: |
+        python execution/ai_predictor.py --game both
+
+    - name: Upload Data to Server via SCP
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.ORACLE_HOST }}
+        username: ubuntu
+        key: ${{ secrets.ORACLE_SSH_KEY }}
+        source: ".tmp/singapore_pools.db,.tmp/ai_predictions.json"
+        target: "/home/ubuntu/Singaporepools"
+        strip_components: 0
