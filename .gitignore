@@ -1,0 +1,29 @@
+# =============================================================================
+# GITIGNORE — 3-Layer Agent Architecture
+# =============================================================================
+
+# --- Secrets & Credentials ---
+.env
+credentials.json
+token.json
+
+# --- Intermediate Files (always regenerated) ---
+.tmp/
+
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- IDE ---
+.idea/
+.vscode/
+*.swp
+*.swo

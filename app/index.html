@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Singapore Pools 4D & Toto Prediction Dashboard - Statistical analysis and number generator for entertainment purposes only.">
+    <title>SG Pools Predictor | 4D & Toto Analysis Dashboard</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container header__inner">
+                <div class="logo">
+                    <span class="logo__icon">🎲</span>
+                    <span>SG Pools Predictor</span>
+                </div>
+                <nav class="nav">
+                    <a href="#dashboard" class="nav__link nav__link--active">Dashboard</a>
+                    <a href="#analysis" class="nav__link">Analysis</a>
+                    <a href="#history" class="nav__link">History</a>
+                    <a href="#settings" class="nav__link">Settings</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Hero -->
+                <section class="hero">
+                    <h1 class="hero__title">
+                        Predict Your <span class="hero__title-gradient">Lucky Numbers</span>
+                    </h1>
+                    <p class="hero__subtitle">
+                        Statistical analysis of 3 years of Singapore Pools 4D & Toto data. 
+                        Powered by probability, pattern recognition, and a touch of luck.
+                    </p>
+                    <span class="hero__disclaimer">
+                        ⚠️ FOR ENTERTAINMENT ONLY — Lottery outcomes are random
+                    </span>
+                </section>
+
+                <!-- Data Status -->
+                <div class="scrape-status" id="scrapeStatus">
+                    <div class="scrape-status__indicator scrape-status__indicator--warning"></div>
+                    <span class="scrape-status__text">Data not loaded. Run scrapers to populate database.</span>
+                    <button class="scrape-status__action" onclick="loadData()">Load Data</button>
+                </div>
+
+                <!-- Stats Overview -->
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="stat4dDraws">0</div>
+                        <div class="stat-card__label">4D Draws</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statTotoDraws">0</div>
+                        <div class="stat-card__label">Toto Draws</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statHotNumber">--</div>
+                        <div class="stat-card__label">Hottest Toto #</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card__value" id="statOverdue">--</div>
+                        <div class="stat-card__label">Most Overdue</div>
+                    </div>
+                </div>
+
+                <!-- Game Selector -->
+                <div class="game-tabs">
+                    <button class="game-tab game-tab--active" data-game="toto" onclick="switchGame('toto')">
+                        <span class="game-tab__icon">🎰</span>
+                        TOTO (6/49)
+                    </button>
+                    <button class="game-tab" data-game="4d" onclick="switchGame('4d')">
+                        <span class="game-tab__icon">🎲</span>
+                        4D
+                    </button>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="dashboard">
+                    <!-- Prediction Panel -->
+                    <div class="card card--span-6">
+                        <div class="card__header">
+                            <h2 class="card__title">
+                                <span class="card__icon">✨</span>
+                                Number Generator
+                            </h2>
+                            <span class="card__badge" id="gameTypeLabel">TOTO</span>
+                        </div>
+                        <div class="card__body">
+                            <div class="strategy-select" id="strategySelect">
+                                <button class="strategy-btn strategy-btn--active" data-strategy="weighted">Weighted</button>
+                                <button class="strategy-btn" data-strategy="hot">Hot Numbers</button>
+                                <button class="strategy-btn" data-strategy="cold">Cold Numbers</button>
+                                <button class="strategy-btn" data-strategy="overdue">Overdue</button>
+                                <button class="strategy-btn" data-strategy="balanced">Balanced</button>
+                                <button class="strategy-btn" data-strategy="random">Random</button>
+                                <button class="strategy-btn strategy-btn--ai" data-strategy="ai" onclick="generateAINumbers()" title="Powered by Gemini AI">🤖 AI Prediction</button>
+                            </div>
+                            
+                            <div class="lottery-balls mb-xl" id="predictedNumbers">
+                                <div class="lottery-ball">?</div>
+                                <div class="lottery-ball">?</div>
+                                <div class="lottery-ball">?</div>
+                                <div class="lottery-ball">?</div>
+                                <div class="lottery-ball">?</div>
+                                <div class="lottery-ball">?</div>
+                                <div class="lottery-ball lottery-ball--additional" id="additionalBall" style="display:none;">+</div>
+                            </div>
+                            
+                            <button class="generate-btn" onclick="generateNumbers()">
+                                🎯 Generate Numbers
+                            </button>
+                            
+                            <p class="mt-lg" style="text-align: center; color: var(--text-muted); font-size: 0.875rem;" id="strategyExplanation">
+                                Select a strategy and generate your lucky numbers
+                            </p>
+                            
+                            <!-- Strategy Explanation Panel -->
+                            <details class="strategy-details mt-lg">
+                                <summary class="strategy-details__toggle">
+                                    📖 How Each Strategy Works
+                                </summary>
+                                <div class="strategy-details__content">
+                                    <div class="strategy-info">
+                                        <div class="strategy-info__item">
+                                            <span class="strategy-info__label">📊 Weighted</span>
+                                            <span class="strategy-info__desc">Combines frequency + gap analysis. Hot numbers get ×1.5 weight, cold get ×0.7, overdue numbers get bonus based on gap length.</span>
+                                        </div>
+                                        <div class="strategy-info__item">
+                                            <span class="strategy-info__label">🔥 Hot Numbers</span>
+                                            <span class="strategy-info__desc">Picks from the most frequently drawn numbers in historical data.</span>
+                                        </div>
+                                        <div class="strategy-info__item">
+                                            <span class="strategy-info__label">❄️ Cold Numbers</span>
+                                            <span class="strategy-info__desc">Picks from least frequent numbers — theory: they're "due" for mean reversion.</span>
+                                        </div>
+                                        <div class="strategy-info__item">
+                                            <span class="strategy-info__label">⏰ Overdue</span>
+                                            <span class="strategy-info__desc">Selects numbers with the longest absence from draws.</span>
+                                        </div>
+                                        <div class="strategy-info__item">
+                                            <span class="strategy-info__label">⚖️ Balanced</span>
+                                            <span class="strategy-info__desc">Hybrid mix: 2 hot + 2 overdue + 2 random for diversification.</span>
+                                        </div>
+                                        <div class="strategy-info__item">
+                                            <span class="strategy-info__label">🎲 Random</span>
+                                            <span class="strategy-info__desc">Pure random selection with equal probability — baseline comparison.</span>
+                                        </div>
+                                        <div class="strategy-info__item strategy-info__item--ai">
+                                            <span class="strategy-info__label">🤖 AI Prediction</span>
+                                            <span class="strategy-info__desc">Gemini 2.0 Flash analyzes 50 draws of historical data for patterns (frequency, gaps, consecutive runs) and generates predictions with confidence levels.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </details>
+                        </div>
+                    </div>
+
+                    <!-- Heatmap Panel -->
+                    <div class="card card--span-6">
+                        <div class="card__header">
+                            <h2 class="card__title">
+                                <span class="card__icon">🔥</span>
+                                Frequency Heatmap
+                            </h2>
+                            <span class="card__badge">1-49</span>
+                        </div>
+                        <div class="card__body">
+                            <div class="heatmap" id="heatmap">
+                                <!-- Generated by JS -->
+                            </div>
+                            <div class="mt-lg" style="display: flex; justify-content: center; gap: 1rem; font-size: 0.75rem; color: var(--text-muted);">
+                                <span>❄️ Cold</span>
+                                <span>⚪ Normal</span>
+                                <span>🔥 Hot</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Distribution Chart -->
+                    <div class="card card--span-8">
+                        <div class="card__header">
+                            <h2 class="card__title">
+                                <span class="card__icon">📊</span>
+                                Number Frequency Distribution
+                            </h2>
+                        </div>
+                        <div class="card__body">
+                            <div class="chart-container">
+                                <canvas id="frequencyChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gap Analysis -->
+                    <div class="card card--span-4">
+                        <div class="card__header">
+                            <h2 class="card__title">
+                                <span class="card__icon">⏰</span>
+                                Overdue Numbers
+                            </h2>
+                        </div>
+                        <div class="card__body">
+                            <div id="overdueList" style="font-family: var(--font-mono);">
+                                <p style="color: var(--text-muted);">Load data to see overdue numbers</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Draws -->
+                    <div class="card card--span-12">
+                        <div class="card__header">
+                            <h2 class="card__title">
+                                <span class="card__icon">📜</span>
+                                Recent Draw History
+                            </h2>
+                            <span class="card__badge" id="historyCount">0 draws</span>
+                        </div>
+                        <div class="card__body">
+                            <table class="history-table" id="historyTable">
+                                <thead>
+                                    <tr>
+                                        <th>Draw #</th>
+                                        <th>Date</th>
+                                        <th>Winning Numbers</th>
+                                        <th>Additional</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyBody">
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; color: var(--text-muted);">
+                                            No data loaded. Run the scrapers first.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p class="footer__text">
+                    Singapore Pools Prediction Dashboard v1.1.0
+                </p>
+                <p class="footer__disclaimer">
+                    This tool is for entertainment purposes only. Gambling involves risk. Please play responsibly.
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="scripts/api.js"></script>
+    <script src="scripts/charts.js"></script>
+    <script src="scripts/predictions.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
