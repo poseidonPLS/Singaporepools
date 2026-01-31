@@ -32,19 +32,19 @@ const TRANSLATIONS = {
 
         // Dashboard
         "card.generator": "Huat Number Generator",
-        "strategy.weighted": "Sure Win? (Weighted)",
-        "strategy.hot": "Shiok Numbers (Hot)",
-        "strategy.cold": "Ulu Numbers (Cold)",
-        "strategy.overdue": "Long Time No See",
-        "strategy.balanced": "Rojak Mix",
-        "strategy.random": "Anyhow Hantam",
+        "strategy.weighted": "📊 Sure Win? (Weighted)",
+        "strategy.hot": "🔥 Shiok Numbers (Hot)",
+        "strategy.cold": "❄️ Ulu Numbers (Cold)",
+        "strategy.overdue": "⏰ Long Time No See",
+        "strategy.balanced": "⚖️ Rojak Mix",
+        "strategy.random": "🎲 Anyhow Hantam",
         "strategy.ai": "🤖 Super Computer (AI)",
         
         "btn.generate": "🎯 Huat Ah! Generate",
         "generator.explanation": "Choose your fighter (strategy) and see your luck",
         
         "details.title": "📖 Simpler English Explanation",
-        "details.weighted": "Mix everything. Hot numbers + overdue numbers. The 'standard' logical choice.",
+        "details.weighted": "Mix of everything. Hot numbers + overdue numbers. The 'standard' logical choice.",
         "details.hot": "Numbers that always come out. The 'popular kids' in school.",
         "details.cold": "Numbers that hide in corner. Betting they suddenly wake up.",
         "details.overdue": "Numbers that MIA (Missing In Action) for very long.",
@@ -113,12 +113,12 @@ const TRANSLATIONS = {
 
         // Dashboard
         "card.generator": "发财号码生成器",
-        "strategy.weighted": "综合分析 (稳)",
-        "strategy.hot": "旺到爆 (Hot)",
-        "strategy.cold": "冷门 (Cold)",
-        "strategy.overdue": "很久没来 (Overdue)",
-        "strategy.balanced": "罗惹 (Rojak) 组合",
-        "strategy.random": "乱乱选 (Anyhow)",
+        "strategy.weighted": "📊 综合分析 (稳)",
+        "strategy.hot": "🔥 旺到爆 (Hot)",
+        "strategy.cold": "❄️ 冷门 (Cold)",
+        "strategy.overdue": "⏰ 很久没来 (Overdue)",
+        "strategy.balanced": "⚖️ 罗惹 (Rojak) 组合",
+        "strategy.random": "🎲 乱乱选 (Anyhow)",
         "strategy.ai": "🤖 电脑神算 (AI)",
         
         "btn.generate": "🎯 发阿 (Huat Ah)!",
@@ -194,12 +194,12 @@ const TRANSLATIONS = {
 
         // Dashboard
         "card.generator": "Mesin Nombor Huat",
-        "strategy.weighted": "Campur (Weighted)",
-        "strategy.hot": "Nombor Panas (Hot)",
-        "strategy.cold": "Nombor Sejuk (Cold)",
-        "strategy.overdue": "Lama Hilang (MIA)",
-        "strategy.balanced": "Rojak Mix",
-        "strategy.random": "Hantam Saja",
+        "strategy.weighted": "📊 Campur (Weighted)",
+        "strategy.hot": "🔥 Nombor Panas (Hot)",
+        "strategy.cold": "❄️ Nombor Sejuk (Cold)",
+        "strategy.overdue": "⏰ Lama Hilang (MIA)",
+        "strategy.balanced": "⚖️ Rojak Mix",
+        "strategy.random": "🎲 Hantam Saja",
         "strategy.ai": "🤖 Komputer Power (AI)",
         
         "btn.generate": "🎯 Huat Ah! Jalan",
@@ -275,12 +275,12 @@ const TRANSLATIONS = {
 
         // Dashboard
         "card.generator": "எண் கணிப்பான்",
-        "strategy.weighted": "கலவை முறை",
-        "strategy.hot": "அதிகம் வந்தவை",
-        "strategy.cold": "குறைவாக வந்தவை",
-        "strategy.overdue": "தாமதமானவை",
-        "strategy.balanced": "சமச்சீர் (Rojak)",
-        "strategy.random": "சீரற்ற (Random)",
+        "strategy.weighted": "📊 கலவை முறை",
+        "strategy.hot": "🔥 அதிகம் வந்தவை",
+        "strategy.cold": "❄️ குறைவாக வந்தவை",
+        "strategy.overdue": "⏰ தாமதமானவை",
+        "strategy.balanced": "⚖️ சமச்சீர் (Rojak)",
+        "strategy.random": "🎲 சீரற்ற (Random)",
         "strategy.ai": "🤖 அறிவார்ந்த கணினி (AI)",
         
         "btn.generate": "🎯 எண்களை எடு!",

@@ -794,6 +794,40 @@ function displayAI4DPrediction(prediction) {
     document.getElementById('strategyExplanation').innerHTML = allSetsHtml;
 }
 
+// Copy PayNow number
+function copyPayNow() {
+    const number = "96788675";
+    navigator.clipboard.writeText(number).then(() => {
+        const alertEl = document.getElementById('copyAlert');
+        if (alertEl) {
+            const originalText = alertEl.textContent;
+            const successKey = "paynow.alert";
+            
+            // Use translation if available
+            if (TRANSLATIONS[App.lang] && TRANSLATIONS[App.lang][successKey]) {
+                alertEl.textContent = TRANSLATIONS[App.lang][successKey];
+            } else {
+                alertEl.textContent = "Copied! Swee!";
+            }
+            
+            alertEl.style.color = "var(--accent-green)";
+            
+            // Revert after 2 seconds
+            setTimeout(() => {
+                const hintKey = "paynow.copy";
+                if (TRANSLATIONS[App.lang] && TRANSLATIONS[App.lang][hintKey]) {
+                    alertEl.textContent = TRANSLATIONS[App.lang][hintKey];
+                } else {
+                    alertEl.textContent = originalText;
+                }
+                alertEl.style.color = "var(--text-muted)";
+            }, 2000);
+        }
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+    });
+}
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     App.init();

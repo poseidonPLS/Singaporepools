@@ -62,166 +62,40 @@
             </div>
         </header>
 
-        <!-- Donation Modal -->
-        <div id="donationModal" class="modal-overlay" style="display: none;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>🍍 Huat Ah! You Won?</h3>
-                    <button onclick="App.toggleDonationModal()" class="btn-close">×</button>
-                </div>
-                <div class="modal-body" style="text-align: center;">
-                    <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;">
-                        Share the good luck! 🧧
-                    </p>
-                    <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;">
-                        Running this prediction engine costs money. If our AI helped you strike 4D or Toto, consider buying me a coffee (or a beer) to keep the servers running!
-                    </p>
-                    
-                    <div class="paynow-box">
-                        <img src="assets/paynow-qr.png" alt="PayNow QR" class="paynow-qr">
-                        <div class="paynow-details">
-                            <span style="font-size: 0.875rem; color: var(--text-muted);">PayNow to Mobile</span>
-                            <div class="paynow-number" onclick="navigator.clipboard.writeText('96788675'); alert('Number copied!')" title="Click to Copy">
-                                9678 8675
-                            </div>
-                            <span style="font-size: 0.75rem; color: var(--accent-cyan);">Click number to copy</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Content -->
-        <main class="main">
-            <div class="container">
-                <!-- Hero (always visible) -->
-                <section class="hero">
-                    <h1 class="hero__title" data-i18n="hero.title">
-                        Predict Your <span class="hero__title-gradient">Lucky Numbers</span>
-                    </h1>
-                    <p class="hero__subtitle" data-i18n="hero.subtitle">
-                        Statistical analysis of 3 years of Singapore Pools 4D & Toto data. 
-                        Powered by probability, pattern recognition, and a touch of luck.
-                    </p>
-                    <span class="hero__disclaimer" data-i18n="hero.disclaimer">
-                        ⚠️ FOR ENTERTAINMENT ONLY — Lottery outcomes are random
-                    </span>
-                </section>
-
-                <!-- Data Status (always visible) -->
-                <div class="scrape-status" id="scrapeStatus">
-                    <div class="scrape-status__indicator scrape-status__indicator--warning"></div>
-                    <span class="scrape-status__text" data-i18n="status.notLoaded">Data not loaded. Run scrapers to populate database.</span>
-                    <button class="scrape-status__action" onclick="loadData()" data-i18n="status.action">Load Data</button>
-                </div>
-
-                <!-- Stats Overview (always visible) -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <span class="stat-card__label" data-i18n="stats.4dDraws">4D Draws</span>
-                        <div class="stat-card__value" id="stat4dDraws">-</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-card__label" data-i18n="stats.totoDraws">Toto Draws</span>
-                        <div class="stat-card__value" id="statTotoDraws">-</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-card__label" data-i18n="stats.hotToto">Hottest Toto #</span>
-                        <div class="stat-card__value" id="statHotNumber">-</div>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-card__label" data-i18n="stats.overdue">Most Overdue</span>
-                        <div class="stat-card__value" id="statOverdue">-</div>
-                    </div>
-                </div>
-
-                <!-- Game Selector (always visible) -->
-                <div class="game-tabs">
-                    <button class="game-tab game-tab--active" onclick="switchGame('toto')" data-game="toto" data-i18n="game.toto">
-                        <span class="game-tab__icon">🎱</span> TOTO
-                    </button>
-                    <button class="game-tab" onclick="switchGame('4d')" data-game="4d" data-i18n="game.4d">
-                        <span class="game-tab__icon">🎰</span> 4D
-                    </button>
-                </div>
-
-                <!-- VIEWS -->
-                
-                <!-- 1. DASHBOARD VIEW -->
-                <div id="view-dashboard" class="view-content active">
-                    <div class="dashboard">
-                        <!-- Prediction Panel -->
-                        <div class="card card--span-12">
-                            <div class="card__header">
-                                <h2 class="card__title" data-i18n="card.generator">
-                                    <span class="card__icon">✨</span>
-                                    Number Generator
-                                </h2>
-                                <span class="card__badge" id="gameTypeLabel">TOTO</span>
-                            </div>
-                            <div class="card__body">
-                                <div class="strategy-select" id="strategySelect">
-                                    <button class="strategy-btn strategy-btn--active" data-strategy="weighted" data-i18n="strategy.weighted">Weighted</button>
-                                    <button class="strategy-btn" data-strategy="hot" data-i18n="strategy.hot">Hot Numbers</button>
-                                    <button class="strategy-btn" data-strategy="cold" data-i18n="strategy.cold">Cold Numbers</button>
-                                    <button class="strategy-btn" data-strategy="overdue" data-i18n="strategy.overdue">Overdue</button>
-                                    <button class="strategy-btn" data-strategy="balanced" data-i18n="strategy.balanced">Balanced</button>
-                                    <button class="strategy-btn" data-strategy="random" data-i18n="strategy.random">Random</button>
-                                    <button class="strategy-btn strategy-btn--ai" data-strategy="ai" onclick="generateAINumbers()" title="Powered by Gemini AI" data-i18n="strategy.ai">🤖 AI Prediction</button>
-                                </div>
-                                
-                                <div class="lottery-balls mb-xl" id="predictedNumbers">
-                                    <div class="lottery-ball">?</div>
-                                    <div class="lottery-ball">?</div>
-                                    <div class="lottery-ball">?</div>
-                                    <div class="lottery-ball">?</div>
-                                    <div class="lottery-ball">?</div>
-                                    <div class="lottery-ball">?</div>
-                                    <div class="lottery-ball lottery-ball--additional" id="additionalBall" style="display:none;">+</div>
-                                </div>
-                                
-                                <button class="generate-btn" onclick="generateNumbers()">
-                                    🎯 Generate Numbers
-                                </button>
-                                
-                                <p class="mt-lg" style="text-align: center; color: var(--text-muted); font-size: 0.875rem;" id="strategyExplanation">
-                                    Select a strategy and generate your lucky numbers
-                                </p>
-                                
-                                <!-- Strategy Explanation Panel -->
+                <!-- Strategy Explanation Panel -->
                                 <details class="strategy-details mt-lg">
-                                    <summary class="strategy-details__toggle">
+                                    <summary class="strategy-details__toggle" data-i18n="details.title">
                                         📖 How Each Strategy Works
                                     </summary>
                                     <div class="strategy-details__content">
                                         <div class="strategy-info">
                                             <div class="strategy-info__item">
-                                                <span class="strategy-info__label">📊 Weighted</span>
-                                                <span class="strategy-info__desc">Combines frequency + gap analysis. Hot numbers get ×1.5 weight, cold get ×0.7, overdue numbers get bonus based on gap length.</span>
+                                                <span class="strategy-info__label" data-i18n="strategy.weighted">📊 Weighted</span>
+                                                <span class="strategy-info__desc" data-i18n="details.weighted">Combines frequency + gap analysis. Hot numbers get ×1.5 weight, cold get ×0.7, overdue numbers get bonus based on gap length.</span>
                                             </div>
                                             <div class="strategy-info__item">
-                                                <span class="strategy-info__label">🔥 Hot Numbers</span>
-                                                <span class="strategy-info__desc">Picks from the most frequently drawn numbers in historical data.</span>
+                                                <span class="strategy-info__label" data-i18n="strategy.hot">🔥 Hot Numbers</span>
+                                                <span class="strategy-info__desc" data-i18n="details.hot">Picks from the most frequently drawn numbers in historical data.</span>
                                             </div>
                                             <div class="strategy-info__item">
-                                                <span class="strategy-info__label">❄️ Cold Numbers</span>
-                                                <span class="strategy-info__desc">Picks from least frequent numbers — theory: they're "due" for mean reversion.</span>
+                                                <span class="strategy-info__label" data-i18n="strategy.cold">❄️ Cold Numbers</span>
+                                                <span class="strategy-info__desc" data-i18n="details.cold">Picks from least frequent numbers — theory: they're "due" for mean reversion.</span>
                                             </div>
                                             <div class="strategy-info__item">
-                                                <span class="strategy-info__label">⏰ Overdue</span>
-                                                <span class="strategy-info__desc">Selects numbers with the longest absence from draws.</span>
+                                                <span class="strategy-info__label" data-i18n="strategy.overdue">⏰ Overdue</span>
+                                                <span class="strategy-info__desc" data-i18n="details.overdue">Selects numbers with the longest absence from draws.</span>
                                             </div>
                                             <div class="strategy-info__item">
-                                                <span class="strategy-info__label">⚖️ Balanced</span>
-                                                <span class="strategy-info__desc">Hybrid mix: 2 hot + 2 overdue + 2 random for diversification.</span>
+                                                <span class="strategy-info__label" data-i18n="strategy.balanced">⚖️ Balanced</span>
+                                                <span class="strategy-info__desc" data-i18n="details.balanced">Hybrid mix: 2 hot + 2 overdue + 2 random for diversification.</span>
                                             </div>
                                             <div class="strategy-info__item">
-                                                <span class="strategy-info__label">🎲 Random</span>
-                                                <span class="strategy-info__desc">Pure random selection with equal probability — baseline comparison.</span>
+                                                <span class="strategy-info__label" data-i18n="strategy.random">🎲 Random</span>
+                                                <span class="strategy-info__desc" data-i18n="details.random">Pure random selection with equal probability — baseline comparison.</span>
                                             </div>
                                             <div class="strategy-info__item strategy-info__item--ai">
-                                                <span class="strategy-info__label">🤖 AI Prediction</span>
-                                                <span class="strategy-info__desc">Gemini 2.0 Flash analyzes 50 draws of historical data for patterns (frequency, gaps, consecutive runs) and generates predictions with confidence levels.</span>
+                                                <span class="strategy-info__label" data-i18n="strategy.ai">🤖 AI Prediction</span>
+                                                <span class="strategy-info__desc" data-i18n="details.ai">Gemini 2.0 Flash analyzes 50 draws of historical data for patterns (frequency, gaps, consecutive runs) and generates predictions with confidence levels.</span>
                                             </div>
                                         </div>
                                     </div>
@@ -357,7 +231,7 @@
                     <div class="paynow-details">
                         <span class="paynow-label" data-i18n="paynow.label">PayNow to Mobile</span>
                         <div class="paynow-number" onclick="copyPayNow()" title="Click to copy">
-                            9000 1234
+                            9678 8675
                             <span class="copy-icon">📋</span>
                         </div>
                         <p class="paynow-hint" id="copyAlert" data-i18n="paynow.copy">Click number to copy</p>
