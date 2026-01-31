@@ -43,13 +43,21 @@
                     <span>SG Pools Predictor</span>
                 </div>
                 <nav class="nav">
-                    <a href="#dashboard" class="nav__link nav__link--active">Dashboard</a>
-                    <a href="#analysis" class="nav__link">Analysis</a>
-                    <a href="#history" class="nav__link">History</a>
-                    <a href="#settings" class="nav__link">Settings</a>
+                    <a href="#dashboard" class="nav__link nav__link--active" data-i18n="nav.dashboard">Home</a>
+                    <a href="#analysis" class="nav__link" data-i18n="nav.analysis">Analysis</a>
+                    <a href="#history" class="nav__link" data-i18n="nav.history">History</a>
+                    <a href="#settings" class="nav__link" data-i18n="nav.settings">Settings</a>
                     <button onclick="App.toggleDonationModal()" class="nav__link nav__link--donate">
-                        <span>☕</span> Donate
+                        <span>☕</span> <span data-i18n="nav.donate">Donate</span>
                     </button>
+                    
+                    <!-- Language Selector -->
+                    <div class="lang-select">
+                        <button class="lang-btn active" onclick="App.setLanguage('en')">EN</button>
+                        <button class="lang-btn" onclick="App.setLanguage('zh')">中</button>
+                        <button class="lang-btn" onclick="App.setLanguage('ms')">MS</button>
+                        <button class="lang-btn" onclick="App.setLanguage('ta')">TA</button>
+                    </div>
                 </nav>
             </div>
         </header>
@@ -88,14 +96,14 @@
             <div class="container">
                 <!-- Hero -->
                 <section class="hero">
-                    <h1 class="hero__title">
+                    <h1 class="hero__title" data-i18n="hero.title">
                         Predict Your <span class="hero__title-gradient">Lucky Numbers</span>
                     </h1>
-                    <p class="hero__subtitle">
+                    <p class="hero__subtitle" data-i18n="hero.subtitle">
                         Statistical analysis of 3 years of Singapore Pools 4D & Toto data. 
                         Powered by probability, pattern recognition, and a touch of luck.
                     </p>
-                    <span class="hero__disclaimer">
+                    <span class="hero__disclaimer" data-i18n="hero.disclaimer">
                         ⚠️ FOR ENTERTAINMENT ONLY — Lottery outcomes are random
                     </span>
                 </section>
@@ -103,40 +111,35 @@
                 <!-- Data Status -->
                 <div class="scrape-status" id="scrapeStatus">
                     <div class="scrape-status__indicator scrape-status__indicator--warning"></div>
-                    <span class="scrape-status__text">Data not loaded. Run scrapers to populate database.</span>
-                    <button class="scrape-status__action" onclick="loadData()">Load Data</button>
+                    <span class="scrape-status__text" data-i18n="status.notLoaded">Data not loaded. Run scrapers to populate database.</span>
+                    <button class="scrape-status__action" onclick="loadData()" data-i18n="status.action">Load Data</button>
                 </div>
 
                 <!-- Stats Overview -->
-                <div class="stats-grid" id="statsGrid">
+                <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-card__value" id="stat4dDraws">0</div>
-                        <div class="stat-card__label">4D Draws</div>
+                        <span class="stat-card__label" data-i18n="stats.4dDraws">4D Draws</span>
+                        <div class="stat-card__value" id="stat4dDraws">-</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-card__value" id="statTotoDraws">0</div>
-                        <div class="stat-card__label">Toto Draws</div>
+                        <span class="stat-card__label" data-i18n="stats.totoDraws">Toto Draws</span>
+                        <div class="stat-card__value" id="statTotoDraws">-</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-card__value" id="statHotNumber">--</div>
-                        <div class="stat-card__label">Hottest Toto #</div>
+                        <span class="stat-card__label" data-i18n="stats.hotToto">Hottest Toto #</span>
+                        <div class="stat-card__value" id="statHotNumber">-</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-card__value" id="statOverdue">--</div>
-                        <div class="stat-card__label">Most Overdue</div>
+                        <span class="stat-card__label" data-i18n="stats.overdue">Most Overdue</span>
+                        <div class="stat-card__value" id="statOverdue">-</div>
                     </div>
                 </div>
 
                 <!-- Game Selector -->
-                <div class="game-tabs">
-                    <button class="game-tab game-tab--active" data-game="toto" onclick="switchGame('toto')">
-                        <span class="game-tab__icon">🎰</span>
-                        TOTO
-                    </button>
-                    <button class="game-tab" data-game="4d" onclick="switchGame('4d')">
-                        <span class="game-tab__icon">🎲</span>
-                        4D
-                    </button>
+                <div class="game-selector">
+                    <button class="game-btn active" onclick="App.setGame('toto')" data-i18n="game.toto">TOTO</button>
+                    <button class="game-btn" onclick="App.setGame('fourD')" data-i18n="game.4d">4D</button>
+                    <div class="game-selector__indicator"></div>
                 </div>
 
                 <!-- VIEWS -->
@@ -147,7 +150,7 @@
                         <!-- Prediction Panel -->
                         <div class="card card--span-12">
                             <div class="card__header">
-                                <h2 class="card__title">
+                                <h2 class="card__title" data-i18n="card.generator">
                                     <span class="card__icon">✨</span>
                                     Number Generator
                                 </h2>
@@ -155,13 +158,13 @@
                             </div>
                             <div class="card__body">
                                 <div class="strategy-select" id="strategySelect">
-                                    <button class="strategy-btn strategy-btn--active" data-strategy="weighted">Weighted</button>
-                                    <button class="strategy-btn" data-strategy="hot">Hot Numbers</button>
-                                    <button class="strategy-btn" data-strategy="cold">Cold Numbers</button>
-                                    <button class="strategy-btn" data-strategy="overdue">Overdue</button>
-                                    <button class="strategy-btn" data-strategy="balanced">Balanced</button>
-                                    <button class="strategy-btn" data-strategy="random">Random</button>
-                                    <button class="strategy-btn strategy-btn--ai" data-strategy="ai" onclick="generateAINumbers()" title="Powered by Gemini AI">🤖 AI Prediction</button>
+                                    <button class="strategy-btn strategy-btn--active" data-strategy="weighted" data-i18n="strategy.weighted">Weighted</button>
+                                    <button class="strategy-btn" data-strategy="hot" data-i18n="strategy.hot">Hot Numbers</button>
+                                    <button class="strategy-btn" data-strategy="cold" data-i18n="strategy.cold">Cold Numbers</button>
+                                    <button class="strategy-btn" data-strategy="overdue" data-i18n="strategy.overdue">Overdue</button>
+                                    <button class="strategy-btn" data-strategy="balanced" data-i18n="strategy.balanced">Balanced</button>
+                                    <button class="strategy-btn" data-strategy="random" data-i18n="strategy.random">Random</button>
+                                    <button class="strategy-btn strategy-btn--ai" data-strategy="ai" onclick="generateAINumbers()" title="Powered by Gemini AI" data-i18n="strategy.ai">🤖 AI Prediction</button>
                                 </div>
                                 
                                 <div class="lottery-balls mb-xl" id="predictedNumbers">
@@ -261,102 +264,125 @@
                                 <div id="overdueList" style="font-family: var(--font-mono);">
                                     <p style="color: var(--text-muted);">Load data to see overdue numbers</p>
                                 </div>
+                          <!-- Analysis Grid -->
+                <div class="analysis-grid hidden" id="analysis">
+                    <!-- Frequency Heatmap -->
+                    <div class="card card--span-12">
+                        <div class="card__header">
+                            <h2 class="card__title" data-i18n="card.heatmap">Frequency Heatmap</h2>
+                            <div class="heatmap-legend">
+                                <span class="legend-item"><span class="dot dot--cold"></span> <span data-i18n="heatmap.cold">Cold</span></span>
+                                <span class="legend-item"><span class="dot dot--normal"></span> <span data-i18n="heatmap.normal">Normal</span></span>
+                                <span class="legend-item"><span class="dot dot--hot"></span> <span data-i18n="heatmap.hot">Hot</span></span>
                             </div>
                         </div>
+                        <div class="heatmap-container" id="heatmap"></div>
+                    </div>
 
-                        <!-- Distribution Chart -->
-                        <div class="card card--span-12">
-                            <div class="card__header">
-                                <h2 class="card__title">
-                                    <span class="card__icon">📊</span>
-                                    Number Frequency Distribution
-                                </h2>
-                            </div>
-                            <div class="card__body">
-                                <div class="chart-container">
-                                    <canvas id="frequencyChart"></canvas>
-                                </div>
-                            </div>
+                    <!-- Overdue Numbers -->
+                    <div class="card card--span-6">
+                        <div class="card__header">
+                            <h2 class="card__title" data-i18n="card.overdue">Overdue Numbers</h2>
+                        </div>
+                        <div class="stat-list" id="overdueList">
+                            <div class="empty-state" data-i18n="overdue.empty">Load data to see overdue numbers</div>
+                        </div>
+                    </div>
+
+                    <!-- Number Distribution -->
+                    <div class="card card--span-6">
+                        <div class="card__header">
+                            <h2 class="card__title" data-i18n="card.distribution">Number Frequency Distribution</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="frequencyChart"></canvas>
                         </div>
                     </div>
                 </div>
 
-                <!-- 3. HISTORY VIEW -->
-                <div id="view-history" class="view-content" style="display: none;">
-                    <div class="dashboard">
-                        <div class="card card--span-12">
-                            <div class="card__header">
-                                <h2 class="card__title">
-                                    <span class="card__icon">📜</span>
-                                    Recent Draw History
-                                </h2>
-                                <span class="card__badge" id="historyCount">0 draws</span>
-                            </div>
-                            <div class="card__body">
-                                <table class="history-table" id="historyTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Draw #</th>
-                                            <th>Date</th>
-                                            <th>Winning Numbers</th>
-                                            <th>Additional</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="historyBody">
-                                        <tr>
-                                            <td colspan="4" style="text-align: center; color: var(--text-muted);">
-                                                No data loaded. Run the scrapers first.
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                
-                                <!-- Pagination Controls -->
-                                <div class="pagination mt-lg" id="historyPagination">
-                                    <button class="btn-pagination" onclick="App.prevPage()" id="prevPageBtn" disabled>
-                                        <i class="icon">❮</i>
-                                    </button>
-                                    <span class="pagination-text">Page <span id="currentPageNum">1</span></span>
-                                    <button class="btn-pagination" onclick="App.nextPage()" id="nextPageBtn">
-                                        <i class="icon">❯</i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                <!-- History View -->
+                <div class="card hidden" id="history">
+                    <div class="card__header">
+                        <h2 class="card__title" data-i18n="card.history">Recent Draw History</h2>
+                        <div class="badge" id="historyCount">0 draws</div>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th data-i18n="table.draw">Draw #</th>
+                                    <th data-i18n="table.date">Date</th>
+                                    <th data-i18n="table.winning">Winning Numbers</th>
+                                    <th data-i18n="table.additional">Additional</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyBody">
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted" data-i18n="table.empty">No data loaded. Run the scrapers first.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="pagination-controls">
+                        <button class="btn-pagination" id="prevPageBtn" onclick="App.prevPage()" disabled>❮</button>
+                        <span class="pagination-text"><span data-i18n="pagination.page">Page</span> <span id="currentPageNum">1</span></span>
+                        <button class="btn-pagination" id="nextPageBtn" onclick="App.nextPage()" disabled>❯</button>
                     </div>
                 </div>
 
-                <!-- 4. SETTINGS VIEW -->
-                <div id="view-settings" class="view-content" style="display: none;">
-                    <div class="dashboard">
-                        <div class="card card--span-12">
-                            <div class="card__header">
-                                <h2 class="card__title">Settings</h2>
-                            </div>
-                            <div class="card__body">
-                                <p style="color: var(--text-muted);">Settings configuration coming soon.</p>
-                                <p>App Version: 1.1.0</p>
-                            </div>
+                <!-- Footer -->
+                <footer class="footer">
+                    <p data-i18n="footer.disclaimer">This tool is for entertainment purposes only. Gambling involves risk. Please play responsibly.</p>
+                    <p class="footer__credit">Built with ❤️ for Singapore Pools enthusiasts</p>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donationModal" class="modal-overlay" style="display: none;">
+        <div class="modal">
+            <div class="modal__header">
+                <h3 class="modal__title" data-i18n="modal.title">🍍 Huat Ah! You Won?</h3>
+                <button class="modal__close" onclick="App.toggleDonationModal()">×</button>
+            </div>
+            <div class="modal__body">
+                <p class="modal__subtitle" data-i18n="modal.subtitle">Share the good luck! 🧧</p>
+                <p class="modal__text" data-i18n="modal.text">
+                    Running this prediction engine costs money. If our AI helped you strike 4D or Toto, 
+                    consider buying me a coffee (or a beer) to keep the servers running!
+                </p>
+                
+                <div class="paynow-box">
+                    <div class="paynow-qr">
+                        <img src="assets/paynow-qr.png" alt="PayNow QR Code" draggable="false">
+                    </div>
+                    <div class="paynow-details">
+                        <span class="paynow-label" data-i18n="paynow.label">PayNow to Mobile</span>
+                        <div class="paynow-number" onclick="copyPayNow()" title="Click to copy">
+                            9000 1234
+                            <span class="copy-icon">📋</span>
                         </div>
+                        <p class="paynow-hint" id="copyAlert" data-i18n="paynow.copy">Click number to copy</p>
                     </div>
                 </div>
             </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <p class="footer__text">
+            <div class="modal__footer">
+                <button class="btn-primary" onclick="App.toggleDonationModal()">OK, Huat!</button>
+            </div>
+        </div>
+    </div>            <p class="footer__text">
                     Singapore Pools Prediction Dashboard v1.1.0
                 </p>
                 <p class="footer__disclaimer">
                     This tool is for entertainment purposes only. Gambling involves risk. Please play responsibly.
                 </p>
-            </div>
         </footer>
     </div>
 
     <!-- Scripts -->
+    <script src="scripts/translations.js"></script>
     <script src="scripts/api.js"></script>
     <script src="scripts/charts.js"></script>
     <script src="scripts/predictions.js"></script>

@@ -17,6 +17,7 @@ const App = {
         itemsPerPage: 10
     },
     analysis: {},
+    lang: 'en', // Default language
 
     // Toggle Donation Modal
     toggleDonationModal() {
@@ -26,9 +27,59 @@ const App = {
         }
     },
 
+    // Set Language
+    setLanguage(lang) {
+        if (!TRANSLATIONS[lang]) return;
+        
+        this.lang = lang;
+        localStorage.setItem('pool_lang', lang);
+        
+        // Update Buttons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.textContent.toLowerCase() === lang || 
+                (lang === 'zh' && btn.textContent === '中') ||
+                (lang === 'ms' && btn.textContent === 'MS') ||
+                (lang === 'ta' && btn.textContent === 'TA'));
+        });
+
+        // Update Text
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const text = TRANSLATIONS[lang][key];
+            if (text) {
+                // If it contains HTML tag (like span), use innerHTML, else textContent
+                if (text.includes('<')) el.innerHTML = text;
+                else el.textContent = text;
+            }
+        });
+        
+        // Update Dynamic Placeholders
+        this.updateDynamicText();
+    },
+
+    updateDynamicText() {
+        // Status message if loaded
+        if (this.data.toto.length > 0) {
+            const tmpl = TRANSLATIONS[this.lang]["status.success"];
+            const msg = tmpl.replace('{toto}', this.data.toto.length).replace('{fourd}', this.data.fourD.length);
+            this.updateScrapeStatus('success', msg);
+        } else {
+             this.updateScrapeStatus(document.querySelector('.scrape-status').className.includes('success') ? 'success' : 'warning', 
+                TRANSLATIONS[this.lang][this.data.toto.length > 0 ? "status.success" : "status.notLoaded"]);
+        }
+    },
+
     // Initialize application
     async init() {
         console.log('🎲 Initializing SG Pools Predictor...');
+        
+        // Load Language
+        const savedLang = localStorage.getItem('pool_lang');
+        if (savedLang && TRANSLATIONS[savedLang]) {
+            this.setLanguage(savedLang);
+        } else {
+            this.setLanguage('en');
+        }
         
         // Set up event listeners
         this.setupStrategyButtons();

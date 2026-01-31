@@ -1126,3 +1126,41 @@ body::before {
 
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes scaleIn { from { transform: scale(0.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   LANGUAGE SELECTOR
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.lang-select {
+  display: flex;
+  gap: 4px;
+  margin-left: var(--space-md);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius-xs);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.lang-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.lang-btn.active {
+  background: var(--bg-tertiary);
+  color: var(--accent-cyan);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
