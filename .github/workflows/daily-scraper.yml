@@ -27,8 +27,21 @@ jobs:
         python -m pip install --upgrade pip
         pip install selenium webdriver-manager beautifulsoup4 google-generativeai python-dotenv
 
+    - name: Download existing DB from Server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.ORACLE_HOST }}
+        username: ubuntu
+        key: ${{ secrets.ORACLE_SSH_KEY }}
+        source: "/home/ubuntu/Singaporepools/.tmp/singapore_pools.db"
+        target: ".tmp/"
+        strip_components: 4
+
     - name: Run Scrapers (Headless)
       run: |
+        # Ensure .tmp exists (if download failed or first run)
+        mkdir -p .tmp
+        
         # Run 4D Scraper
         python execution/scrape_4d.py --limit 5
         
