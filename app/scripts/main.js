@@ -11,17 +11,19 @@ const App = {
         toto: [],
         fourD: [],
     },
-    analysis: {
-        frequency: null,
-        gaps: null,
+    // Pagination State
+    pagination: {
+        currentPage: 1,
+        itemsPerPage: 10
     },
-    
+
     // Initialize application
     async init() {
         console.log('🎲 Initializing SG Pools Predictor...');
         
         // Set up event listeners
         this.setupStrategyButtons();
+        this.setupNavigation();
         
         // Initialize charts
         Charts.initFrequencyChart();
@@ -33,6 +35,54 @@ const App = {
         await this.loadData();
         
         console.log('✅ Application initialized');
+    },
+
+    // --- Navigation Logic ---
+    setupNavigation() {
+        const links = document.querySelectorAll('.nav__link');
+        const views = document.querySelectorAll('.view-content');
+
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Active Link
+                links.forEach(l => l.classList.remove('nav__link--active'));
+                link.classList.add('nav__link--active');
+
+                // Show View
+                const targetId = link.getAttribute('href').substring(1); // 'dashboard'
+                
+                views.forEach(view => {
+                    view.style.display = view.id === `view-${targetId}` ? 'block' : 'none';
+                });
+                
+                // If switching to analysis, refresh charts to ensure width is correct
+                if (targetId === 'analysis') {
+                    setTimeout(() => Charts.updateFrequencyChart(this.analysis.frequency?.frequency), 100);
+                }
+            });
+        });
+    },
+
+    // --- Pagination Logic ---
+    nextPage() {
+        const draws = this.currentGame === 'toto' ? this.data.toto : this.data.fourD;
+        const maxPage = Math.ceil(draws.length / this.pagination.itemsPerPage);
+        
+        if (this.pagination.currentPage < maxPage) {
+            this.pagination.currentPage++;
+            this.renderHistoryTable();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    },
+
+    prevPage() {
+        if (this.pagination.currentPage > 1) {
+            this.pagination.currentPage--;
+            this.renderHistoryTable();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     },
     
     // Load data from API
@@ -190,14 +240,25 @@ const App = {
     renderHistoryTable() {
         const tbody = document.getElementById('historyBody');
         const countBadge = document.getElementById('historyCount');
+        const prevBtn = document.getElementById('prevPageBtn');
+        const nextBtn = document.getElementById('nextPageBtn');
+        const pageNum = document.getElementById('currentPageNum');
+        
         if (!tbody) return;
         
         const draws = this.currentGame === 'toto' ? this.data.toto : this.data.fourD;
-        const recent = draws.slice(0, 10);
         
-        if (countBadge) {
-            countBadge.textContent = `${draws.length} draws`;
-        }
+        // Pagination Calculation
+        const startIndex = (this.pagination.currentPage - 1) * this.pagination.itemsPerPage;
+        const endIndex = startIndex + this.pagination.itemsPerPage;
+        const recent = draws.slice(startIndex, endIndex);
+        const totalPages = Math.ceil(draws.length / this.pagination.itemsPerPage);
+        
+        // Update Controls
+        if (countBadge) countBadge.textContent = `${draws.length} draws`;
+        if (pageNum) pageNum.textContent = `${this.pagination.currentPage} / ${totalPages}`;
+        if (prevBtn) prevBtn.disabled = this.pagination.currentPage === 1;
+        if (nextBtn) nextBtn.disabled = this.pagination.currentPage >= totalPages;
         
         if (recent.length === 0) {
             tbody.innerHTML = `
@@ -329,6 +390,9 @@ function switchGame(game) {
         });
         if (additionalBall) additionalBall.style.display = 'inline-flex';
     }
+    
+    // Reset pagination
+    App.pagination.currentPage = 1;
     
     // Re-analyze data for the new game
     App.analyzeData();
