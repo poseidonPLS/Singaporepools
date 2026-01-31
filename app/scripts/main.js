@@ -16,6 +16,7 @@ const App = {
         currentPage: 1,
         itemsPerPage: 10
     },
+    analysis: {},
 
     // Initialize application
     async init() {
