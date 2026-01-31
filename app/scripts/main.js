@@ -74,7 +74,7 @@ const App = {
         if (this.pagination.currentPage < maxPage) {
             this.pagination.currentPage++;
             this.renderHistoryTable();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            this.scrollToTop();
         }
     },
 
@@ -82,7 +82,20 @@ const App = {
         if (this.pagination.currentPage > 1) {
             this.pagination.currentPage--;
             this.renderHistoryTable();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            this.scrollToTop();
+        }
+    },
+
+    scrollToTop() {
+        const table = document.getElementById('view-history');
+        if (table) {
+            const headerOffset = 100;
+            const elementPosition = table.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
         }
     },
     

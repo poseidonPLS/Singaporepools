@@ -264,10 +264,14 @@
                                 </table>
                                 
                                 <!-- Pagination Controls -->
-                                <div class="pagination mt-lg" id="historyPagination" style="display: flex; justify-content: center; gap: 0.5rem; align-items: center;">
-                                    <button class="btn-icon" onclick="App.prevPage()" id="prevPageBtn" disabled>←</button>
-                                    <span style="color: var(--text-muted); font-size: 0.9rem;">Page <span id="currentPageNum">1</span></span>
-                                    <button class="btn-icon" onclick="App.nextPage()" id="nextPageBtn">→</button>
+                                <div class="pagination mt-lg" id="historyPagination">
+                                    <button class="btn-pagination" onclick="App.prevPage()" id="prevPageBtn" disabled>
+                                        <i class="icon">❮</i>
+                                    </button>
+                                    <span class="pagination-text">Page <span id="currentPageNum">1</span></span>
+                                    <button class="btn-pagination" onclick="App.nextPage()" id="nextPageBtn">
+                                        <i class="icon">❯</i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
