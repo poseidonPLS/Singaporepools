@@ -205,6 +205,8 @@ const App = {
             if (this.analysis.gaps?.mostOverdue?.length > 0) {
                 document.getElementById('statOverdue').textContent = this.analysis.gaps.mostOverdue[0].number;
             }
+        } else if (this.currentGame === '4d' && this.data.fourD.length > 0) {
+            this.analysis.fourDFrequency = API.analyze4DFrequency(this.data.fourD);
         }
     },
     
@@ -244,34 +246,21 @@ const App = {
             b: lerp(c1.b, c2.b, t)
         });
         
-        for (let i = 1; i <= 49; i++) {
-            const cell = document.createElement('div');
-            cell.className = 'heatmap__cell';
-            cell.textContent = i;
-            
-            // Get deviation score (-1 = coldest, 0 = neutral, 1 = hottest)
-            const deviation = this.analysis.frequency?.deviations?.[i] || 0;
-            
+        // Helper to style a cell based on deviation
+        const styleCell = (cell, deviation, freq, label) => {
             let color, textColor, boxShadow = 'none';
             
             if (deviation > 0.05) {
-                // Hot: interpolate neutral → red
-                const t = Math.min(deviation / 0.8, 1); // Faster ramp for hot
+                const t = Math.min(deviation / 0.8, 1);
                 color = lerpColor(neutralColor, hotColor, t);
                 textColor = `rgba(255, 255, 255, ${0.6 + t * 0.4})`;
-                if (t > 0.6) {
-                    boxShadow = `0 0 ${Math.round(8 + t * 8)}px rgba(239, 68, 68, ${t * 0.4})`;
-                }
+                if (t > 0.6) boxShadow = `0 0 ${Math.round(8 + t * 8)}px rgba(239, 68, 68, ${t * 0.4})`;
             } else if (deviation < -0.05) {
-                // Cold: interpolate neutral → blue
                 const t = Math.min(Math.abs(deviation) / 0.8, 1);
                 color = lerpColor(neutralColor, coldColor, t);
                 textColor = `rgba(255, 255, 255, ${0.6 + t * 0.4})`;
-                if (t > 0.6) {
-                    boxShadow = `0 0 ${Math.round(8 + t * 8)}px rgba(59, 130, 246, ${t * 0.4})`;
-                }
+                if (t > 0.6) boxShadow = `0 0 ${Math.round(8 + t * 8)}px rgba(59, 130, 246, ${t * 0.4})`;
             } else {
-                // Neutral zone
                 color = neutralColor;
                 textColor = 'rgba(255, 255, 255, 0.5)';
             }
@@ -280,13 +269,78 @@ const App = {
             cell.style.color = textColor;
             cell.style.boxShadow = boxShadow;
             
-            // Add tooltip with frequency and deviation
-            const freq = this.analysis.frequency?.frequency?.[i] || 0;
             const deviationPct = Math.round(deviation * 100);
             const sign = deviationPct >= 0 ? '+' : '';
-            cell.setAttribute('data-tooltip', `#${i}: ${freq}× (${sign}${deviationPct}%)`);
+            cell.setAttribute('data-tooltip', `${label}: ${freq}× (${sign}${deviationPct}%)`);
+        };
+        
+        if (this.currentGame === '4d') {
+            // 4D: Show 4-column (positions) × 10-row (digits) grid
+            container.style.gridTemplateColumns = 'repeat(4, 1fr)';
+            container.style.maxWidth = '320px';
             
-            container.appendChild(cell);
+            const positionData = this.analysis.fourDFrequency?.positionFreq;
+            const positions = ['thousands', 'hundreds', 'tens', 'units'];
+            const positionLabels = ['1st', '2nd', '3rd', '4th'];
+            
+            // Add header row
+            positions.forEach((_, i) => {
+                const header = document.createElement('div');
+                header.className = 'heatmap__header';
+                header.textContent = positionLabels[i];
+                header.style.textAlign = 'center';
+                header.style.fontWeight = '600';
+                header.style.color = 'var(--accent-cyan)';
+                header.style.padding = '0.5rem';
+                header.style.fontSize = '0.75rem';
+                container.appendChild(header);
+            });
+            
+            // Calculate deviations for 4D
+            const totalPerPosition = this.data.fourD.length * 3; // 3 prizes per draw
+            const expected = totalPerPosition / 10; // 10 digits
+            
+            // Find max deviation for normalization
+            let maxAbsDev = 0;
+            positions.forEach(pos => {
+                for (let d = 0; d <= 9; d++) {
+                    const count = positionData?.[pos]?.[d] || 0;
+                    const dev = Math.abs((count - expected) / expected);
+                    if (dev > maxAbsDev) maxAbsDev = dev;
+                }
+            });
+            
+            // Render digit rows (0-9)
+            for (let digit = 0; digit <= 9; digit++) {
+                positions.forEach(pos => {
+                    const cell = document.createElement('div');
+                    cell.className = 'heatmap__cell';
+                    cell.textContent = digit;
+                    
+                    const count = positionData?.[pos]?.[digit] || 0;
+                    const rawDev = (count - expected) / expected;
+                    const deviation = maxAbsDev > 0 ? rawDev / maxAbsDev : 0;
+                    
+                    styleCell(cell, deviation, count, `Digit ${digit}`);
+                    container.appendChild(cell);
+                });
+            }
+        } else {
+            // TOTO: Standard 1-49 grid (7 columns)
+            container.style.gridTemplateColumns = 'repeat(7, 1fr)';
+            container.style.maxWidth = '500px';
+            
+            for (let i = 1; i <= 49; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'heatmap__cell';
+                cell.textContent = i;
+                
+                const deviation = this.analysis.frequency?.deviations?.[i] || 0;
+                const freq = this.analysis.frequency?.frequency?.[i] || 0;
+                
+                styleCell(cell, deviation, freq, `#${i}`);
+                container.appendChild(cell);
+            }
         }
     },
     
