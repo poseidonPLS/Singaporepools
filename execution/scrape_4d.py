@@ -65,7 +65,19 @@ def setup_driver(headless: bool = True) -> webdriver.Chrome:
     options.add_argument("--window-size=1920,1080")
     options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36")
     
-    service = Service(ChromeDriverManager().install())
+    # Linux/Snap compatibility
+    if Path("/snap/bin/chromium").exists():
+        options.binary_location = "/snap/bin/chromium"
+    
+    service = None
+    if Path("/snap/bin/chromium.chromedriver").exists():
+        service = Service(executable_path="/snap/bin/chromium.chromedriver")
+    else:
+        try:
+            service = Service(ChromeDriverManager().install())
+        except Exception:
+            pass # Fallback to default path
+            
     driver = webdriver.Chrome(service=service, options=options)
     return driver
 
