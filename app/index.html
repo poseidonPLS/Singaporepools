@@ -94,9 +94,7 @@
         <!-- Main Content -->
         <main class="main">
             <div class="container">
-                <!-- 1. DASHBOARD VIEW -->
-                <div id="view-dashboard" class="view-content">
-                    <!-- Hero -->
+                <!-- Hero (always visible) -->
                 <section class="hero">
                     <h1 class="hero__title" data-i18n="hero.title">
                         Predict Your <span class="hero__title-gradient">Lucky Numbers</span>
@@ -110,14 +108,14 @@
                     </span>
                 </section>
 
-                <!-- Data Status -->
+                <!-- Data Status (always visible) -->
                 <div class="scrape-status" id="scrapeStatus">
                     <div class="scrape-status__indicator scrape-status__indicator--warning"></div>
                     <span class="scrape-status__text" data-i18n="status.notLoaded">Data not loaded. Run scrapers to populate database.</span>
                     <button class="scrape-status__action" onclick="loadData()" data-i18n="status.action">Load Data</button>
                 </div>
 
-                <!-- Stats Overview -->
+                <!-- Stats Overview (always visible) -->
                 <div class="stats-grid">
                     <div class="stat-card">
                         <span class="stat-card__label" data-i18n="stats.4dDraws">4D Draws</span>
@@ -137,7 +135,7 @@
                     </div>
                 </div>
 
-                <!-- Game Selector -->
+                <!-- Game Selector (always visible) -->
                 <div class="game-tabs">
                     <button class="game-tab game-tab--active" onclick="switchGame('toto')" data-game="toto" data-i18n="game.toto">
                         <span class="game-tab__icon">🎱</span> TOTO
