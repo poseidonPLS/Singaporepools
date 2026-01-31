@@ -311,33 +311,31 @@
 
     <!-- Donation Modal -->
     <div id="donationModal" class="modal-overlay" style="display: none;">
-        <div class="modal">
-            <div class="modal__header">
-                <h3 class="modal__title" data-i18n="modal.title">🍍 Huat Ah! You Won?</h3>
-                <button class="modal__close" onclick="App.toggleDonationModal()">×</button>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="modal.title">🍍 Huat Ah! You Won?</h3>
+                <button class="btn-close" onclick="App.toggleDonationModal()">×</button>
             </div>
-            <div class="modal__body">
-                <p class="modal__subtitle" data-i18n="modal.subtitle">Share the good luck! 🧧</p>
-                <p class="modal__text" data-i18n="modal.text">
+            <div style="text-align: center;">
+                <p style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600;" data-i18n="modal.subtitle">Share the good luck! 🧧</p>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 0.9rem;" data-i18n="modal.text">
                     Running this prediction engine costs money. If our AI helped you strike 4D or Toto, 
                     consider buying me a coffee (or a beer) to keep the servers running!
                 </p>
                 
                 <div class="paynow-box">
-                    <div class="paynow-qr">
-                        <img src="assets/paynow-qr.png" alt="PayNow QR Code" draggable="false">
-                    </div>
+                    <img src="assets/paynow-qr.png" alt="PayNow QR Code" class="paynow-qr">
                     <div class="paynow-details">
-                        <span class="paynow-label" data-i18n="paynow.label">PayNow to Mobile</span>
+                        <span style="font-size: 0.875rem; color: var(--text-muted);" data-i18n="paynow.label">PayNow to Mobile</span>
                         <div class="paynow-number" onclick="copyPayNow()" title="Click to copy">
                             9678 8675
-                            <span class="copy-icon">📋</span>
+                            <span class="copy-icon" style="font-size: 1.2rem; vertical-align: middle;">📋</span>
                         </div>
-                        <p class="paynow-hint" id="copyAlert" data-i18n="paynow.copy">Click number to copy</p>
+                        <p id="copyAlert" style="font-size: 0.75rem; color: var(--accent-cyan); margin-top: 0.25rem;" data-i18n="paynow.copy">Click number to copy</p>
                     </div>
                 </div>
             </div>
-            <div class="modal__footer">
+            <div style="margin-top: 1.5rem; text-align: center;">
                 <button class="btn-primary" onclick="App.toggleDonationModal()">OK, Huat!</button>
             </div>
         </div>
