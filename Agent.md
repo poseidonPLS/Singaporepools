@@ -74,13 +74,30 @@ git push origin main
 ssh oracle "cd Singaporepools && git pull && python3 execution/server.py"
 ```
 
-## System History & Audit (Jan 2026)
+## System History & Audit
 
-**Recent Major Refactors:**
+### Feb 2026
+- **GHA Workflow Fix**: Resolved `tar: Cowardly refusing to create an empty archive` error.
+  - **Root Cause**: `appleboy/scp-action` requires files to exist; Selenium was failing silently due to missing Chrome.
+  - **Fix**: Added explicit Chrome installation via `browser-actions/setup-chrome@v1`, replaced scp-action with direct SCP commands, added file verification step before upload.
+- **Backfill Gaps**: If scheduled runs fail, manually trigger the workflow 2-3 times to catch up. The scraper deduplicates via `draw_number` unique constraint.
+
+### Jan 2026
 - **Migration to GitHub Actions**: Moved all scraping logic off the ARM64 server to GHA to fix `SessionNotCreatedException` errors.
 - **Frontend API Fix**: Switched `api.js` to relative paths to fix Mixed Content errors on `singaporepools.win`.
 - **Database Persistence**: Updated GHA workflow to *download* the existing DB before scraping to prevent overwriting history.
 - **AI Integration**: Configured Gemini API key in GitHub Secrets for automated prediction generation.
+
+## Troubleshooting
+
+**GHA Workflow Fails with Empty Archive:**
+1. Check if Chrome is installed (`browser-actions/setup-chrome@v1`).
+2. Verify `.tmp/` contains files after scraper step (debug output shows this).
+3. Ensure `ORACLE_SSH_KEY` and `ORACLE_HOST` secrets are set.
+
+**Missing Draws After Outage:**
+- Run workflow manually 2-3 times with `--limit 5`, or temporarily set `--limit 20` for one-shot backfill.
+- Duplicates are automatically skipped.
 
 ## Summary
 
