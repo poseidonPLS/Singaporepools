@@ -28,14 +28,22 @@ jobs:
         pip install selenium webdriver-manager beautifulsoup4 google-generativeai python-dotenv
 
     - name: Download existing DB from Server
-      uses: appleboy/scp-action@master
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.ORACLE_HOST }}
         username: ubuntu
         key: ${{ secrets.ORACLE_SSH_KEY }}
-        source: "/home/ubuntu/Singaporepools/.tmp/singapore_pools.db"
-        target: ".tmp/"
-        strip_components: 4
+        script: |
+          cat /home/ubuntu/Singaporepools/.tmp/singapore_pools.db 2>/dev/null || echo "NO_DB_EXISTS"
+      continue-on-error: true
+
+    - name: Fetch DB via SCP
+      run: |
+        mkdir -p .tmp
+        echo "${{ secrets.ORACLE_SSH_KEY }}" > /tmp/ssh_key
+        chmod 600 /tmp/ssh_key
+        scp -o StrictHostKeyChecking=no -i /tmp/ssh_key ubuntu@${{ secrets.ORACLE_HOST }}:/home/ubuntu/Singaporepools/.tmp/singapore_pools.db .tmp/ || echo "No existing DB found, starting fresh"
+        rm /tmp/ssh_key
 
     - name: Run Scrapers (Headless)
       run: |
@@ -60,6 +68,6 @@ jobs:
         host: ${{ secrets.ORACLE_HOST }}
         username: ubuntu
         key: ${{ secrets.ORACLE_SSH_KEY }}
-        source: ".tmp/singapore_pools.db,.tmp/ai_predictions.json"
-        target: "/home/ubuntu/Singaporepools"
-        strip_components: 0
+        source: ".tmp/*"
+        target: "/home/ubuntu/Singaporepools/.tmp"
+        strip_components: 1
