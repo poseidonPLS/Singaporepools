@@ -160,7 +160,7 @@ python execution/scrape_toto.py --limit 20
 ### Deploy Code Changes
 ```bash
 git add . && git commit -m "feat: description" && git push
-ssh oracle "cd Singaporepools && git pull && systemctl restart singaporepools"
+ssh oracle "cd Singaporepools && git pull && pkill -f 'execution/server.py'; nohup venv/bin/python execution/server.py > server.log 2>&1 &"
 ```
 
 ---
