@@ -200,9 +200,18 @@ If scraping breaks, verify these selectors haven't changed.
 
 ---
 
+## Versioning Standards
+Always update the numbers for version `X.Y.Z` on every update when generating or updating files:
+- **X**: Major change of the project structure or capabilities.
+- **Y**: Minor feature upgrade.
+- **Z**: Bug fixes, text updates, or minor tweaks.
+
+---
+
 ## Version History
 
 | Date | Change |
 |------|--------|
+| Feb 2026 | Replaced AI predictions endpoint with local generation logic; Migrated to PM2 deploying. |
 | Feb 2026 | Fixed GHA workflow: Chrome install, direct SCP, file verification |
 | Jan 2026 | Migrated scrapers to GHA, added AI predictions, relative API paths |
