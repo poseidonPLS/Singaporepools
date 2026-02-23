@@ -1,4 +1,4 @@
-name: Daily Scraper & AI Prediction
+name: Daily Scraper
 
 on:
   schedule:
@@ -30,7 +30,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install selenium webdriver-manager beautifulsoup4 google-generativeai python-dotenv
+        pip install selenium webdriver-manager beautifulsoup4
 
     - name: Fetch DB via SCP
       run: |
@@ -60,14 +60,6 @@ jobs:
         echo "📁 Contents of .tmp/:"
         ls -la .tmp/
 
-    - name: Run AI Predictor
-      env:
-        GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
-      run: |
-        python execution/ai_predictor.py --game both
-        echo "📁 Final .tmp/ contents:"
-        ls -la .tmp/
-
     - name: Verify files exist before upload
       id: verify
       run: |
@@ -78,22 +70,14 @@ jobs:
           echo "❌ Database file NOT found!"
           echo "db_exists=false" >> $GITHUB_OUTPUT
         fi
-        
-        if [ -f ".tmp/ai_predictions.json" ]; then
-          echo "✅ Predictions file exists"
-          echo "predictions_exist=true" >> $GITHUB_OUTPUT
-        else
-          echo "❌ Predictions file NOT found!"
-          echo "predictions_exist=false" >> $GITHUB_OUTPUT
-        fi
 
     - name: Upload Data to Server via SCP
-      if: steps.verify.outputs.db_exists == 'true' || steps.verify.outputs.predictions_exist == 'true'
+      if: steps.verify.outputs.db_exists == 'true'
       run: |
         echo "${{ secrets.ORACLE_SSH_KEY }}" > /tmp/ssh_key
         chmod 600 /tmp/ssh_key
         
-        # Upload each file individually
+        # Upload database
         if [ -f ".tmp/singapore_pools.db" ]; then
           echo "📤 Uploading database..."
           scp -o StrictHostKeyChecking=no -i /tmp/ssh_key \
@@ -101,18 +85,11 @@ jobs:
             ubuntu@${{ secrets.ORACLE_HOST }}:/home/ubuntu/Singaporepools/.tmp/
         fi
         
-        if [ -f ".tmp/ai_predictions.json" ]; then
-          echo "📤 Uploading predictions..."
-          scp -o StrictHostKeyChecking=no -i /tmp/ssh_key \
-            .tmp/ai_predictions.json \
-            ubuntu@${{ secrets.ORACLE_HOST }}:/home/ubuntu/Singaporepools/.tmp/
-        fi
-        
         rm -f /tmp/ssh_key
         echo "✅ Upload complete!"
 
     - name: Skip upload (no files)
-      if: steps.verify.outputs.db_exists != 'true' && steps.verify.outputs.predictions_exist != 'true'
+      if: steps.verify.outputs.db_exists != 'true'
       run: |
         echo "⚠️ No files to upload - check scraper logs above for errors"
         exit 1
