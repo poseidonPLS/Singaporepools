@@ -11,13 +11,12 @@ This is a **Hybrid Cloud System** for Singapore Pools lottery analysis. Heavy au
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
 │                        GITHUB ACTIONS (x64)                              │
-│  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐                 │
-│  │ scrape_4d.py │   │scrape_toto.py│   │ai_predictor.py│                │
-│  └──────┬───────┘   └──────┬───────┘   └──────┬───────┘                 │
-│         └──────────────────┼──────────────────┘                         │
+│           ┌──────────────┐   ┌──────────────┐                            │
+│           │ scrape_4d.py │   │scrape_toto.py│                            │
+│           └──────┬───────┘   └──────┬───────┘                            │
+│                  └────────┬─────────┘                                    │
 │                            ▼                                             │
 │                    .tmp/singapore_pools.db                               │
-│                    .tmp/ai_predictions.json                              │
 │                            │ SCP                                         │
 └────────────────────────────┼────────────────────────────────────────────┘
                              ▼
@@ -26,7 +25,7 @@ This is a **Hybrid Cloud System** for Singapore Pools lottery analysis. Heavy au
 │                   https://singaporepools.win                             │
 │  ┌──────────────────────────────────────────────────────────────────┐   │
 │  │                        server.py (:8080)                          │   │
-│  │  /api/4d  /api/toto  /api/analysis/4d  /api/predictions          │   │
+│  │  /api/4d  /api/toto  /api/analysis/4d  /api/analysis/toto        │   │
 │  └──────────────────────────────────────────────────────────────────┘   │
 │  ┌──────────────────────────────────────────────────────────────────┐   │
 │  │                        app/ (Static)                              │   │
@@ -42,17 +41,16 @@ This is a **Hybrid Cloud System** for Singapore Pools lottery analysis. Heavy au
 ```
 Singaporepools/
 ├── .github/workflows/
-│   └── daily-scraper.yml    # Automation: scrape + predict + deploy
+│   └── daily-scraper.yml    # Automation: scrape + upload DB
 ├── .tmp/                     # DATA (synced between GHA ↔ Oracle)
-│   ├── singapore_pools.db   # SQLite database (4D + Toto draws)
-│   └── ai_predictions.json  # Cached AI predictions
+│   └── singapore_pools.db   # SQLite database (4D + Toto draws)
 ├── app/                      # FRONTEND (served by server.py)
 │   ├── index.html
 │   ├── scripts/
 │   │   ├── api.js           # Backend communication
 │   │   ├── main.js          # Core UI logic
 │   │   ├── charts.js        # Chart rendering
-│   │   ├── predictions.js   # AI prediction display
+│   │   ├── predictions.js   # Local number-generation strategies
 │   │   └── translations.js  # i18n (EN/CN)
 │   └── styles/main.css
 ├── execution/                # PYTHON BACKEND
@@ -60,7 +58,6 @@ Singaporepools/
 │   ├── database.py          # SQLite ORM
 │   ├── scrape_4d.py         # Selenium scraper (runs on GHA)
 │   ├── scrape_toto.py       # Selenium scraper (runs on GHA)
-│   ├── ai_predictor.py      # Gemini API predictions (runs on GHA)
 │   └── analysis/            # Statistical analysis modules
 ├── requirements.txt          # Python dependencies
 └── .env.example              # Environment variable template
@@ -76,7 +73,6 @@ Singaporepools/
 | `/api/toto` | GET | All Toto draw results (JSON array) |
 | `/api/analysis/4d` | GET | 4D statistical analysis |
 | `/api/analysis/toto` | GET | Toto frequency/gap analysis |
-| `/api/predictions` | GET | Cached AI predictions |
 | `/*` | GET | Static files from `app/` |
 
 **Frontend Note:** `api.js` uses **relative paths** (`/api/...`). Never hardcode `localhost:8080`.
@@ -128,15 +124,13 @@ CREATE TABLE draws_toto (
 |--------|-------------|
 | `ORACLE_HOST` | Server IP/hostname |
 | `ORACLE_SSH_KEY` | Private SSH key (PEM format) |
-| `GOOGLE_API_KEY` | Gemini API key |
 
 **Flow:**
 1. Checkout code
 2. Install Chrome + Python deps
 3. **Download** existing DB from Oracle via SCP
 4. Run scrapers (`--limit 5`)
-5. Generate AI predictions
-6. **Upload** updated DB + predictions back to Oracle
+5. **Upload** updated DB back to Oracle
 
 ---
 
@@ -148,7 +142,7 @@ python execution/server.py --port 8080
 ```
 
 ### Trigger Manual Scrape
-Go to GitHub → Actions → "Daily Scraper & AI Prediction" → Run workflow
+Go to GitHub → Actions → "Daily Scraper" → Run workflow
 
 ### Backfill Missing Draws
 ```bash
@@ -159,9 +153,14 @@ python execution/scrape_toto.py --limit 20
 
 ### Deploy Code Changes
 ```bash
-git add . && git commit -m "feat: description" && git push
-ssh oracle "cd Singaporepools && git pull && pm2 restart singaporepools"
+# 1. Push to GitHub main
+git push origin main
+# 2. Deploy on racknerd2 (needs Don's sudo) — pulls origin/main, restarts, health-checks
+ssh -t racknerd2 'sudo deploy-site singaporepools'
+# Roll back: ssh -t racknerd2 'sudo deploy-site singaporepools --rollback'
 ```
+Production runs on **racknerd2** as `sites-singaporepools.service` (since 2026-09-22). The old
+`ssh oracle` + pm2 recipe is dead — Oracle now hosts unrelated production, never deploy there.
 
 ---
 
@@ -212,6 +211,7 @@ Always update the numbers for version `X.Y.Z` on every update when generating or
 
 | Date | Change |
 |------|--------|
+| Sep 2026 | v1.1.0 — Removed Gemini AI prediction entirely (button, API route, scheduler hook, `ai_predictor.py`); site uses its six local strategies only. |
 | Feb 2026 | Replaced AI predictions endpoint with local generation logic; Migrated to PM2 deploying. |
 | Feb 2026 | Fixed GHA workflow: Chrome install, direct SCP, file verification |
 | Jan 2026 | Migrated scrapers to GHA, added AI predictions, relative API paths |

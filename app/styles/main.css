@@ -1,6 +1,6 @@
 /* =============================================================================
    Singapore Pools Prediction Dashboard
-   Version: 1.0.1
+   Version: 1.1.0
    Theme: Dark mode with neon accents - Bloomberg meets Vegas
    ============================================================================= */
 
@@ -571,28 +571,6 @@ body::before {
   color: var(--bg-primary);
 }
 
-.strategy-btn--ai {
-  background: linear-gradient(135deg, #8b5cf6, #d946ef);
-  border-color: transparent;
-  color: white;
-  position: relative;
-  overflow: hidden;
-}
-
-.strategy-btn--ai::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transform: translateX(-100%);
-  animation: shimmer 2s infinite;
-}
-
-.strategy-btn--ai:hover {
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
-  transform: translateY(-2px);
-}
-
 .generate-btn {
   width: 100%;
   padding: var(--space-md) var(--space-xl);
@@ -952,11 +930,6 @@ body::before {
   background: var(--surface-glass);
   border-radius: var(--radius-sm);
   border-left: 3px solid rgba(0, 255, 240, 0.3);
-}
-
-.strategy-info__item--ai {
-  border-left-color: #8b5cf6;
-  background: rgba(139, 92, 246, 0.08);
 }
 
 .strategy-info__label {

@@ -63,10 +63,6 @@ class APIHandler(SimpleHTTPRequestHandler):
             self.send_json(self.get_4d_analysis())
         elif path == "/api/analysis/toto":
             self.send_json(self.get_toto_analysis())
-        elif path == "/api/ai-prediction":
-            self.send_json(self.get_ai_predictions())
-        # Note: On-demand generation removed to save API tokens
-        # AI predictions are auto-generated after each scheduled scrape
         elif path == "/api/health":
             self.send_json({"status": "ok", "version": "1.1.0"})
         else:
@@ -202,19 +198,6 @@ class APIHandler(SimpleHTTPRequestHandler):
                 "start": draws[-1]["draw_date"] if draws else None,
                 "end": draws[0]["draw_date"] if draws else None,
             }
-        }
-    
-    def get_ai_predictions(self):
-        """Get cached AI predictions from file."""
-        predictions_file = Path(".tmp/ai_predictions.json")
-        
-        if predictions_file.exists():
-            with open(predictions_file) as f:
-                return json.load(f)
-        
-        return {
-            "error": "No predictions available",
-            "message": "AI predictions are generated automatically after each scheduled scrape"
         }
     
     def log_message(self, format, *args):

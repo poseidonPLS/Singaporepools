@@ -38,7 +38,6 @@ const TRANSLATIONS = {
         "strategy.overdue": "⏰ Long Time No See",
         "strategy.balanced": "⚖️ Rojak Mix",
         "strategy.random": "🎲 Anyhow Hantam",
-        "strategy.ai": "🤖 Super Computer (AI)",
         
         "btn.generate": "🎯 Huat Ah! Generate",
         "generator.explanation": "Choose your fighter (strategy) and see your luck",
@@ -50,7 +49,6 @@ const TRANSLATIONS = {
         "details.overdue": "Numbers that MIA (Missing In Action) for very long.",
         "details.balanced": "Rojak style: 2 hot + 2 overdue + 2 random. Kiasu a bit, cover all bases.",
         "details.random": "Anyhow press. Pure luck. Same chance as buying QuickPick at counter.",
-        "details.ai": "Like a super genius calculator. It studies the last 50 draws very hard to find secret patterns you cannot see. Trust the machine!",
 
         // Analysis
         "card.heatmap": "Frequency Heatmap",
@@ -119,7 +117,6 @@ const TRANSLATIONS = {
         "strategy.overdue": "⏰ 很久没来 (Overdue)",
         "strategy.balanced": "⚖️ 罗惹 (Rojak) 组合",
         "strategy.random": "🎲 乱乱选 (Anyhow)",
-        "strategy.ai": "🤖 电脑神算 (AI)",
         
         "btn.generate": "🎯 发阿 (Huat Ah)!",
         "generator.explanation": "选一个方法，看看你的财运",
@@ -131,7 +128,6 @@ const TRANSLATIONS = {
         "details.overdue": "失踪最久的号码。MIA 很久了。",
         "details.balanced": "Rojak 混合：2个热门 + 2个遗漏 + 2个随机。大包围，怕死输 (Kiasu)。",
         "details.random": "乱乱选。纯碰运气，跟去投注站买 QuickPick 一样。",
-        "details.ai": "像个超级电脑大师。它帮你死命研究过去50期，找出你看不见的‘路’。相信科技！",
 
         // Analysis
         "card.heatmap": "路珠热力图",
@@ -200,7 +196,6 @@ const TRANSLATIONS = {
         "strategy.overdue": "⏰ Lama Hilang (MIA)",
         "strategy.balanced": "⚖️ Rojak Mix",
         "strategy.random": "🎲 Hantam Saja",
-        "strategy.ai": "🤖 Komputer Power (AI)",
         
         "btn.generate": "🎯 Huat Ah! Jalan",
         "generator.explanation": "Pilih strategi, tengok ong anda",
@@ -212,7 +207,6 @@ const TRANSLATIONS = {
         "details.overdue": "Nombor yang dah lama tak nampak (MIA).",
         "details.balanced": "Rojak: sikit panas, sikit sejuk, sikit random. Cover semua.",
         "details.random": "Main tikam saja. Macam QuickPick.",
-        "details.ai": "Komputer ni tolong kaji 50 result lepas. Dia cari pattern yang mata kita tak nampak. Biar mesin buat kerja!",
 
         // Analysis
         "card.heatmap": "Peta Haba",
@@ -281,7 +275,6 @@ const TRANSLATIONS = {
         "strategy.overdue": "⏰ தாமதமானவை",
         "strategy.balanced": "⚖️ சமச்சீர் (Rojak)",
         "strategy.random": "🎲 சீரற்ற (Random)",
-        "strategy.ai": "🤖 அறிவார்ந்த கணினி (AI)",
         
         "btn.generate": "🎯 எண்களை எடு!",
         "generator.explanation": "ஒரு முறையைத் தேர்வு செய்யவும்",
@@ -293,7 +286,6 @@ const TRANSLATIONS = {
         "details.overdue": "வெகு நாட்களாக வராத எண்கள்.",
         "details.balanced": "Rojak: 2 சூடான + 2 தாமதமான + 2 சீரற்ற.",
         "details.random": "அதிர்ஷ்டம் மட்டும். QuickPick போல.",
-        "details.ai": "கடந்த 50 முடிவுகளை கணினி ஆராய்கிறது. நம் கண்ணுக்குத் தெரியாத வடிவங்களைக் கண்டுபிடிக்கும். கணினியை நம்புங்கள்!",
 
         // Analysis
         "card.heatmap": "வெப்ப வரைபடம்",

@@ -166,14 +166,6 @@ def run_scraper(game: str):
     elif game == "toto":
         from execution.scrape_toto import main as scrape_toto
         scrape_toto(headless=True, limit=5)
-    
-    # Run AI prediction after scraping
-    print(f"\n🤖 Generating AI prediction for {game.upper()}...")
-    try:
-        from execution.ai_predictor import generate_prediction
-        generate_prediction(game)
-    except Exception as e:
-        print(f"   ⚠ AI prediction failed: {e}")
 
 
 def calculate_scrape_time(draw_time: datetime) -> datetime:
