@@ -6,31 +6,28 @@
 
 ## Architecture Overview
 
-This is a **Hybrid Cloud System** for Singapore Pools lottery analysis. Heavy automation runs on GitHub Actions (x64), while the Oracle Cloud server (ARM64) only serves the frontend and API.
+Everything runs on **racknerd2** (x64) since 2026-09-22: a systemd timer scrapes new draws into
+SQLite, and `server.py` serves the API and the static frontend at https://singaporepools.win
+(Cloudflare-proxied, nginx in front).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                        GITHUB ACTIONS (x64)                              │
-│           ┌──────────────┐   ┌──────────────┐                            │
-│           │ scrape_4d.py │   │scrape_toto.py│                            │
-│           └──────┬───────┘   └──────┬───────┘                            │
-│                  └────────┬─────────┘                                    │
-│                            ▼                                             │
-│                    .tmp/singapore_pools.db                               │
-│                            │ SCP                                         │
-└────────────────────────────┼────────────────────────────────────────────┘
-                             ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                     ORACLE CLOUD (ARM64)                                 │
-│                   https://singaporepools.win                             │
+│                          RACKNERD2 (x64)                                │
+│                                                                         │
+│  sites-sp-scrape.timer → run_scrape.sh                                  │
+│      scrape_4d.py + scrape_toto.py (Selenium, Google Chrome deb)        │
+│                            │                                            │
+│                            ▼                                            │
+│                    .tmp/singapore_pools.db                              │
+│                            │                                            │
+│  sites-singaporepools.service                                           │
 │  ┌──────────────────────────────────────────────────────────────────┐   │
-│  │                        server.py (:8080)                          │   │
+│  │                  server.py (127.0.0.1:8080)                      │   │
 │  │  /api/4d  /api/toto  /api/analysis/4d  /api/analysis/toto        │   │
+│  │  app/ (static): index.html → main.js, api.js, charts.js, ...     │   │
 │  └──────────────────────────────────────────────────────────────────┘   │
-│  ┌──────────────────────────────────────────────────────────────────┐   │
-│  │                        app/ (Static)                              │   │
-│  │  index.html → main.js, api.js, charts.js, predictions.js         │   │
-│  └──────────────────────────────────────────────────────────────────┘   │
+│                            ▲                                            │
+│              nginx ← Cloudflare ← https://singaporepools.win            │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -40,9 +37,7 @@ This is a **Hybrid Cloud System** for Singapore Pools lottery analysis. Heavy au
 
 ```
 Singaporepools/
-├── .github/workflows/
-│   └── daily-scraper.yml    # Automation: scrape + upload DB
-├── .tmp/                     # DATA (synced between GHA ↔ Oracle)
+├── .tmp/                     # DATA (lives on the server; never deployed)
 │   └── singapore_pools.db   # SQLite database (4D + Toto draws)
 ├── app/                      # FRONTEND (served by server.py)
 │   ├── index.html
@@ -54,10 +49,10 @@ Singaporepools/
 │   │   └── translations.js  # i18n (EN/CN)
 │   └── styles/main.css
 ├── execution/                # PYTHON BACKEND
-│   ├── server.py            # REST API (runs on Oracle)
+│   ├── server.py            # REST API + static frontend
 │   ├── database.py          # SQLite ORM
-│   ├── scrape_4d.py         # Selenium scraper (runs on GHA)
-│   ├── scrape_toto.py       # Selenium scraper (runs on GHA)
+│   ├── scrape_4d.py         # Selenium scraper (run by the server timer)
+│   ├── scrape_toto.py       # Selenium scraper (run by the server timer)
 │   └── analysis/            # Statistical analysis modules
 ├── requirements.txt          # Python dependencies
 └── .env.example              # Environment variable template
@@ -111,26 +106,17 @@ CREATE TABLE draws_toto (
 
 ---
 
-## GitHub Actions Workflow
+## Scheduled Scraping
 
-**File:** `.github/workflows/daily-scraper.yml`
+**Timer:** `sites-sp-scrape.timer` → `sites-sp-scrape.service` on racknerd2, running
+`/home/sites/Singaporepools/run_scrape.sh` (server-side, not in this repo).
 
-**Schedule:**
-- **4D**: Wed, Sat, Sun @ 7:15 PM SGT (`15 11 * * 0,3,6` UTC)
-- **Toto**: Mon, Thu @ 10:15 PM SGT (`15 14 * * 1,4` UTC)
+**Schedule (SGT):**
+- **4D**: Wed, Sat, Sun @ 7:15 PM
+- **Toto**: Mon, Thu @ 10:15 PM
 
-**Secrets Required:**
-| Secret | Description |
-|--------|-------------|
-| `ORACLE_HOST` | Server IP/hostname |
-| `ORACLE_SSH_KEY` | Private SSH key (PEM format) |
-
-**Flow:**
-1. Checkout code
-2. Install Chrome + Python deps
-3. **Download** existing DB from Oracle via SCP
-4. Run scrapers (`--limit 5`)
-5. **Upload** updated DB back to Oracle
+Scrapers run with `--limit 5` against the live DB; duplicates are skipped. The old GitHub
+Actions workflow (scrape on GHA, SCP the DB to Oracle) was deleted in v1.1.1.
 
 ---
 
@@ -142,11 +128,13 @@ python execution/server.py --port 8080
 ```
 
 ### Trigger Manual Scrape
-Go to GitHub → Actions → "Daily Scraper" → Run workflow
+```bash
+ssh -t racknerd2 'sudo systemctl start sites-sp-scrape.service'   # needs Don's sudo
+```
 
 ### Backfill Missing Draws
 ```bash
-# Temporarily increase limit in workflow, or run multiple times
+# Run on the server as `sites`, or trigger the timer's service several times
 python execution/scrape_4d.py --limit 20
 python execution/scrape_toto.py --limit 20
 ```
@@ -166,13 +154,13 @@ Production runs on **racknerd2** as `sites-singaporepools.service` (since 2026-0
 
 ## Troubleshooting
 
-### GHA Fails with "empty archive"
-- **Cause:** Scrapers failed, no files created
-- **Fix:** Chrome installation added via `browser-actions/setup-chrome@v1`
-- **Debug:** Check "Run Scrapers" step output for errors
+### Scraper Fails on racknerd2
+- Check the service log: `journalctl -u sites-sp-scrape.service` (on racknerd2)
+- Chrome must be the **Google Chrome deb**, never the Chromium snap — snap confinement fails on
+  that box, and the scrapers prefer `/snap/bin/chromium` if it exists.
 
 ### Missing Draws After Outage
-- Run workflow manually 2-3× (deduplication handles overlap)
+- Trigger a manual scrape 2-3× (deduplication handles overlap)
 - Or temporarily set `--limit 20` for one-shot backfill
 
 ### Frontend Not Updating
@@ -192,9 +180,9 @@ If scraping breaks, verify these selectors haven't changed.
 
 ## Key Constraints
 
-1. **Never run scrapers on Oracle** — ARM64 + Snap sandbox = Selenium crash
+1. **Never deploy or scrape on Oracle** — it hosts unrelated A-Tec production now
 2. **Never hardcode localhost** — Frontend uses relative `/api/` paths
-3. **Always download DB before scraping** — Preserves historical data
+3. **Never overwrite the server's `.tmp/` DB** — it is the only copy of the scraped history
 4. **Scrapers are idempotent** — Safe to re-run; duplicates skipped
 
 ---
@@ -211,6 +199,7 @@ Always update the numbers for version `X.Y.Z` on every update when generating or
 
 | Date | Change |
 |------|--------|
+| Sep 2026 | v1.1.1 — Deleted the obsolete GitHub Actions scraper; docs now describe the racknerd2 timer + `deploy-site`. |
 | Sep 2026 | v1.1.0 — Removed Gemini AI prediction entirely (button, API route, scheduler hook, `ai_predictor.py`); site uses its six local strategies only. |
 | Feb 2026 | Replaced AI predictions endpoint with local generation logic; Migrated to PM2 deploying. |
 | Feb 2026 | Fixed GHA workflow: Chrome install, direct SCP, file verification |
